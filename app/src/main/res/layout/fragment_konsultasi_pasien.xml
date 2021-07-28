@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".KonsultasiPasienFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Konsultasi"
+            app:titleTextColor="@color/white"
+            android:background="@color/purple_700"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_undraw_doctors"
+            app:layout_constraintTop_toBottomOf="@id/toolbars"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="16dp"
+            android:text="Konsultasi ini terbagi atas 2 aspek yaitu Aspek Perilaku dan Aspek non Perilaku"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            android:textColor="@color/black"/>
+        <Button
+            android:id="@+id/btn_konsultasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mulai Konsultasi"
+            app:layout_constraintTop_toBottomOf="@id/info"
+            app:layout_constraintBottom_toTopOf="@+id/info3"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="16dp"
+            />
+
+        <TextView
+            android:id="@+id/info3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginVertical="32dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Setelah konsultasi, hasil konsultasi dapat dilihat pada menu Dashboard"
+            app:layout_constraintTop_toBottomOf="@id/btn_konsultasi"
+            android:textColor="@color/black"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

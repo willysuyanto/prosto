@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ladokgi.apps">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Ladokgi">
+        <activity android:name=".EditPasienActivity"></activity>
+        <activity android:name=".CreatePasienActivity" />
+        <activity android:name=".KonsultasiReviewActivity" />
+        <activity android:name=".DaftarPasienActivity" />
+        <activity android:name=".KonsultasiPasienActivity" />
+        <activity android:name=".AspekNonPerilaku" />
+        <activity android:name=".AspekPerilakuActivity" />
+        <activity
+            android:name=".RegistrasiActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".DokterActivity"
+            android:label="@string/title_activity_dokter" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1027974460408",
+    "project_id": "ladokgi-98cae",
+    "storage_bucket": "ladokgi-98cae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027974460408:android:5eb089a56e667976d55c0d",
+        "android_client_info": {
+          "package_name": "com.ladokgi.apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027974460408-ne80hcl6nldl5mjpt8c1k8kmv67keque.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ladokgi.apps",
+            "certificate_hash": "c47aa5e41db023875793c2b52de99ed0862926e8"
+          }
+        },
+        {
+          "client_id": "1027974460408-k8et5s0is4p79e7kg1d1gu76rr00ra49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiRPMNnaWqRop2pQI_iTbMWLCEpWlHXhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027974460408-k8et5s0is4p79e7kg1d1gu76rr00ra49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
