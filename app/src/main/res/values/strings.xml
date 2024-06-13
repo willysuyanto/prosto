@@ -4,4 +4,40 @@
     <string name="title_activity_pasien">MainActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="spinnerPlaceholder">Pendidikan Terakhir</string>
+    <string name="perilaku_pertanyaan1">Merendam gigi tiruan dalam wadah berisi air dalam suhu ruangan apabila tidak digunakan?</string>
+    <string name="perilaku_pertanyaan2">Membersihkan gigi tiruan setiap hari dengan air mengalir dan menyikatnya dengan sikat gigi?</string>
+    <string name="perilaku_pertanyaan3">Banyak orang yang saya kenal menganjurkan saya merendam gigi tiruan dan direndam dialam wadah berisi air dengan suhu ruangan apabila tidak digunakan</string>
+    <string name="perilaku_pertanyaan4">Orang yang memakai gigi tiruan seperti saya akan merendam gigi tiruannya dalam air bersuhu ruangan apabila tidak digunakan</string>
+    <string name="perilaku_pertanyaan5">Saya merasakan tekanan sosial yang mengharuskan saya merendam gigi tiruan saya dalam wadah berisi air bersuhu ruangan bila sedang tidak digunakan.</string>
+    <string name="perilaku_pertanyaan6">Banyak yang saya kenal menganjurkan saya membersihkan gigi tiruan dibawah air yang mengalir dan menyikatnya setiap hari.</string>
+    <string name="perilaku_pertanyaan7">Orang yang menggunakan gigi tiruan seperti saya akan membersihkan gigi tiruan dibawah air yang mengalir dan menyikatnya setiap hari</string>
+    <string name="perilaku_pertanyaan8">Saya merasakan tekanan sosial yang mengharuskan saya membersihkan gigi tiruan dibawah air yang mengalir dan menyikatnya setiap hari</string>
+    <string name="perilaku_pertanyaan9">Saya yakin dapat merendam gigi tiruan saya dalam wadah berisi air bersuhu ruangan bila sedang tidak digunakan.</string>
+    <string name="perilaku_pertanyaan10">Saya yakin dapat membersihkan gigi tiruan saya dibawah air mengalir dan menyikatnya setiap hari.</string>
+    <string name="perilaku_pertanyaan11">Jika saya mau, saya tidak ada kesulitan untuk merendam gigi tiruan dalam wadah berisi air mengalir bila sedang tidak digunakan</string>
+    <string name="perilaku_pertanyaan12">Jika saya mau, saya tidak ada kesulitan untuk merendam gigi tiruan dan menyikatnya setiap hari.</string>
+    <string name="perilaku_pertanyaan13">Bagi saya, merendam gigi tiruan saya dalam wadah berisi air bersuhu ruangan bila sedang tidak digunakan adalah tergantung pada diri saya sendiri.</string>
+    <string name="perilaku_pertanyaan14">Kegiatan membersihkan gigi tiruan dibawah air mengalir adalah tergantung pada diri saya sendiri.</string>
+    <string name="perilaku_pertanyaan15">Saya berniat merendam gigi tiruan saya dalam wadah berisi air bersuhu ruangan bila sedang tidak digunakan.</string>
+    <string name="perilaku_pertanyaan16">Saya berniat membersihkan gigi tiruan dibawah air mengalir dan menyikatnya sendiri.</string>
+    <string name="perilaku_pertanyaan17">Dalam tiga bulan terakhir ini saya merendam gigi tiruan saya dalam wadah berisi air bersuhu ruangan bila sedang tidak digunakan.</string>
+    <string name="perilaku_pertanyaan18">Dalam tiga bulan terakhir ini saya membersihkan gigi tiruan dibawah air mengalir dan menyikatnya sendiri.</string>
+    <string name="non_perilaku_pertanyaan1">Apakah Saudara/Saudari minum air mineral untuk kebutuhan minum sehari-hari?</string>
+    <string name="non_perilaku_pertanyaan2">Apakah Saudara/Saudari minum air kemasan?</string>
+    <string name="non_perilaku_pertanyaan3">Apakah Saudara/Saudari merokok?</string>
+    <string name="non_perilaku_pertanyaan4">Apakah Saudara/Saudari mempunyai kebiasaan mengkonsumsi makanan/minuman yang manis?</string>
+    <string name="non_perilaku_pertanyaan5">Apakah Saudara/Saudari mempunyai kebiasaan mengkonsumsi makanan/minuman yang asam?</string>
+    <string name="non_perilaku_pertanyaan6">Apakah Saudara/Saudari mempunyai kebiasaan mengkonsumsi makanan/minuman yang asin?</string>
+    <string name="non_perilaku_pertanyaan7">Apakah gigi anda sering linu saat mengunyah karena gigi aus/atrisi?</string>
+    <string name="non_perilaku_pertanyaan8">Apakah Saudara/Saudari tidak mempunyai gigi berlubang/karies?</string>
+    <string name="non_perilaku_pertanyaan9">Apakah Saudara/Saudari tidak mempunyai plak gigi?</string>
+    <string name="non_perilaku_pertanyaan10">Apakah saudara/Saudari tidak mempunyai karang gigi?</string>
+    <string-array name="data_pendidikan">
+        <item>SMA</item>
+        <item>D3</item>
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+    </string-array>
 </resources>

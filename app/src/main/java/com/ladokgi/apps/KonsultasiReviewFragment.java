@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +50,6 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
 
     List<DataKonsultasi> list = new ArrayList<>();
 
-    LinearLayoutManager linearLayoutManager;
     DataKonsultasiAdapter adapter;
     RecyclerView.LayoutManager mLayoutManager;
 
@@ -108,9 +108,9 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
                             konsultasi.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                                    for(DocumentSnapshot docsnap : task.getResult()){
+                                    for(DocumentSnapshot docsnap : Objects.requireNonNull(task.getResult())){
                                         Log.d("Nama Pasien: ", ds.getString("nama"));
-                                        if(docsnap.getString("status").equals("pending")){
+                                        if(Objects.equals(docsnap.getString("status"), "pending")){
                                         DataKonsultasi datas = new DataKonsultasi(ds.getString("nama"), docsnap.getString("tanggal-konsultasi"),docsnap.getBoolean("perilaku.hasil"), docsnap.getBoolean("non-perilaku.hasil"),docsnap.getString("status"), ds.getString("username"),docsnap.getId());
                                         list.add(datas);
                                         }

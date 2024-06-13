@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DaftarPasienActivity">
+    tools:context=".daftarpasien.DaftarPasienActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbars"
@@ -13,6 +13,7 @@
         android:background="@color/purple_700"
         app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_daftar_pasien"
         app:title="Data Pasien"/>
 
     <androidx.recyclerview.widget.RecyclerView

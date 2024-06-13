@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DashboardPasienFragment">
+    tools:context=".homepage.DashboardPasienFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +18,17 @@
             android:src="@drawable/backgorund"
             app:layout_constraintTop_toTopOf="parent"/>
         <TextView
+            android:id="@+id/appname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PROSTO MOBILE"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="18dp"/>
+        <TextView
             android:id="@+id/judul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,18 +36,38 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintTop_toBottomOf="@id/appname" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/logo"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/judul"
-            app:layout_constraintStart_toStartOf="parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/judul">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/logo" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/logo_unpad" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/greet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            android:text="Halo, Selamat datang di dasboard pasien \n PROSTO MOBILE"
+            app:layout_constraintTop_toBottomOf="@id/heroImage"/>
         <TextView
             android:id="@+id/konsul"
             android:layout_width="match_parent"
@@ -44,9 +75,10 @@
             android:text="Konsultasi Saya"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:padding="16dp"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/heroImage"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/greet"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv"
@@ -71,20 +103,22 @@
             app:layout_constraintVertical_bias="0.651"
             tools:layout_editor_absoluteX="0dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Belum ada data Konsultasi"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
 
             <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginVertical="8dp"
                 android:src="@drawable/ic_undraw_medical_r" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:textSize="18sp"
+                android:text="Belum ada data Konsultasi"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
             <Button
                 android:id="@+id/btn_consultnow"
                 android:layout_width="match_parent"

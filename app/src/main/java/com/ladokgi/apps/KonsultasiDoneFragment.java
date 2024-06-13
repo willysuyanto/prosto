@@ -110,7 +110,8 @@ public class KonsultasiDoneFragment extends Fragment implements DataKonsultasiAd
                                 public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                                     for(DocumentSnapshot docsnap : task.getResult()){
                                         Log.d("Nama Pasien: ", ds.getString("nama"));
-                                        if(docsnap.getString("status").equals("confirmed")){
+                                        String status = docsnap.getString("status");
+                                        if(status != null && status.equals("confirmed")){
                                             DataKonsultasi datas = new DataKonsultasi(ds.getString("nama"), docsnap.getString("tanggal-konsultasi"),docsnap.getBoolean("perilaku.hasil"), docsnap.getBoolean("non-perilaku.hasil"),docsnap.getString("status"), ds.getString("username"),docsnap.getId());
                                             list.add(datas);
                                         }

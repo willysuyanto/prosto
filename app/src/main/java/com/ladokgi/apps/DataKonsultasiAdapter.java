@@ -16,9 +16,9 @@ public class DataKonsultasiAdapter extends RecyclerView.Adapter<DataKonsultasiAd
 
     private static final String TAG = DataKonsultasiAdapter.class.getSimpleName();
 
-    private Context context;
-    private List<DataKonsultasi> list;
-    private DataKonsultasiAdapterCallback mAdapterCallback;
+    private final Context context;
+    private final List<DataKonsultasi> list;
+    private final DataKonsultasiAdapterCallback mAdapterCallback;
 
     public DataKonsultasiAdapter(Context context, List<DataKonsultasi> list, DataKonsultasiAdapterCallback adapterCallback) {
         this.context = context;

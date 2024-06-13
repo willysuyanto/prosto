@@ -11,9 +11,8 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.ladokgi.apps.databinding.ActivityKonsultasiPasienBinding;
 
 public class KonsultasiPasienActivity extends AppCompatActivity {
-    ActivityKonsultasiPasienBinding binding;
 
-    private String[] titles = new String[]{"Belum direview", "Sudah direview"};
+    private final String[] titles = new String[]{"Belum direview", "Sudah direview"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

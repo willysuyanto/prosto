@@ -11,7 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class KonsultasiPagerAdapter extends FragmentStateAdapter {
-    private String[] titles = new String[]{"Belum direview", "Sudah direview"};
+    private final String[] titles = new String[]{"Belum direview", "Sudah direview"};
     public KonsultasiPagerAdapter(@NonNull @NotNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }

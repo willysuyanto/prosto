@@ -15,9 +15,9 @@ public class KonsultasiAdapter extends RecyclerView.Adapter<KonsultasiAdapter.Vi
 
     private static final String TAG = KonsultasiAdapter.class.getSimpleName();
 
-    private Context context;
-    private List<Konsultasi> list;
-    private KonsultasiAdapterCallback mAdapterCallback;
+    private final Context context;
+    private final List<Konsultasi> list;
+    private final KonsultasiAdapterCallback mAdapterCallback;
 
     public KonsultasiAdapter(Context context, List<Konsultasi> list, KonsultasiAdapterCallback adapterCallback) {
         this.context = context;
@@ -38,9 +38,11 @@ public class KonsultasiAdapter extends RecyclerView.Adapter<KonsultasiAdapter.Vi
         Konsultasi item = list.get(position);
         holder.hasil.setText(calculateHasil(item.isHasilPerilaku(),item.isHasilNonPerilaku()));
         holder.tanggal.setText(item.getTanggal());
-        if (item.getStatus().equals("pending")){
+        if (item.getStatus().equals("unfinished")){
+            holder.status.setText("Proses konsultasi sedang berlangsung");
+        }else if (item.getStatus().equals("pending")){
             holder.status.setText("Sedang direview oleh dokter");
-        }else {
+        } else {
             holder.status.setText("Hasil telah diverifikasi oleh dokter");
         }
     }

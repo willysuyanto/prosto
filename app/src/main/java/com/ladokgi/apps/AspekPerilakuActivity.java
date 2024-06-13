@@ -3,16 +3,14 @@ package com.ladokgi.apps;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,17 +18,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.Document;
-import com.google.type.DateTime;
 import com.orhanobut.hawk.Hawk;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,26 +30,89 @@ import java.util.List;
 import java.util.Map;
 
 public class AspekPerilakuActivity extends AppCompatActivity {
-
-    RadioGroup rg1, rg2, rg3, rg4;
-    CheckBox cb_pagi1, cb_siang1, cb_malam1, cb_siang2, cb_sore2,cb_tidur2, cb_makan2, cb_bangun2;
+    CustomSeekbar sb1_1, sb1_2, sb1_3, sb2_1, sb2_2, sb2_3, sb3, sb4, sb5, sb6, sb7, sb8, sb9, sb10, sb11, sb12, sb13, sb14, sb15, sb16, sb17, sb18;
+    LinearLayout p1_1, p1_2, p1_3, p2_1, p2_2, p2_3, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18;
     Button btnSubmit;
-
-    int BobotP1 = 0;
-    int BobotP2 = 0;
-    int BobotP3 = 0;
-    int BobotP4 = 0;
-    String SelectedP1 = "";
-    String SelectedP2 = "";
-    String SelectedP3 = "";
-    String SelectedP4 = "";
-    List<String> selectedCB1 = new ArrayList();
-    List<String> selectedCB2 = new ArrayList();
 
     CollectionReference konsultasi;
     String currentUser;
     int currentId;
 
+
+    public void initializeSeekbar(Context context) {
+        // Instantiate Custom Seekbar
+        sb1_1 = new CustomSeekbar(context, 7, R.color.black, "Merugikan", "Menguntungkan");
+        sb1_2 = new CustomSeekbar(context, 7, R.color.black, "Merepotkan", "Memudahkan");
+        sb1_3 = new CustomSeekbar(context, 7, R.color.black, "Membosankan", "Menyenangkan");
+        sb2_1 = new CustomSeekbar(context, 7, R.color.black, "Buruk", "Baik");
+        sb2_2 = new CustomSeekbar(context, 7, R.color.black, "Membuang Waktu", "Bermanfaat");
+        sb2_3 = new CustomSeekbar(context, 7, R.color.black, "Membosankan", "Menyenangkan");
+        sb3 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb4 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb5 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb6 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb7 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb8 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb9 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb10 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb11 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb12 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb13 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb14 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb15 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb16 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb17 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+        sb18 = new CustomSeekbar(context, 7, R.color.black, "Tidak Setuju", "Setuju");
+
+        // Bind seekbar parent view (LinearLayout)
+        p1_1 = findViewById(R.id.pertanyaan1);
+        p1_2 = findViewById(R.id.pertanyaan1_2);
+        p1_3 = findViewById(R.id.pertanyaan1_3);
+        p2_1 = findViewById(R.id.pertanyaan2);
+        p2_2 = findViewById(R.id.pertanyaan2_2);
+        p2_3 = findViewById(R.id.pertanyaan2_3);
+        p3 = findViewById(R.id.pertanyaan3);
+        p4 = findViewById(R.id.pertanyaan4);
+        p5 = findViewById(R.id.pertanyaan5);
+        p6 = findViewById(R.id.pertanyaan6);
+        p7 = findViewById(R.id.pertanyaan7);
+        p8 = findViewById(R.id.pertanyaan8);
+        p9 = findViewById(R.id.pertanyaan9);
+        p10 = findViewById(R.id.pertanyaan10);
+        p11 = findViewById(R.id.pertanyaan11);
+        p12 = findViewById(R.id.pertanyaan12);
+        p13 = findViewById(R.id.pertanyaan13);
+        p14 = findViewById(R.id.pertanyaan14);
+        p15 = findViewById(R.id.pertanyaan15);
+        p16 = findViewById(R.id.pertanyaan16);
+        p17 = findViewById(R.id.pertanyaan17);
+        p18 = findViewById(R.id.pertanyaan18);
+
+
+        // add seekbar to its view
+        sb1_1.addSeekBar(p1_1);
+        sb1_2.addSeekBar(p1_2);
+        sb1_3.addSeekBar(p1_3);
+        sb2_1.addSeekBar(p2_1);
+        sb2_2.addSeekBar(p2_2);
+        sb2_3.addSeekBar(p2_3);
+        sb3.addSeekBar(p3);
+        sb4.addSeekBar(p4);
+        sb5.addSeekBar(p5);
+        sb6.addSeekBar(p6);
+        sb7.addSeekBar(p7);
+        sb8.addSeekBar(p8);
+        sb9.addSeekBar(p9);
+        sb10.addSeekBar(p10);
+        sb11.addSeekBar(p11);
+        sb12.addSeekBar(p12);
+        sb13.addSeekBar(p13);
+        sb14.addSeekBar(p14);
+        sb15.addSeekBar(p15);
+        sb16.addSeekBar(p16);
+        sb17.addSeekBar(p17);
+        sb18.addSeekBar(p18);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,318 +125,146 @@ public class AspekPerilakuActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         konsultasi = db.collection("users").document(currentUser).collection("konsultasi");
 
+        initializeSeekbar(this.getApplicationContext());
+
         checkInitialData();
 
         btnSubmit = findViewById(R.id.btn_kirim);
-        rg1 = findViewById(R.id.pertanyaanRadio1);
-        rg2 = findViewById(R.id.pertanyaanRadio2);
-        rg3 = findViewById(R.id.pertanyaanRadio3);
-        rg4 = findViewById(R.id.pertanyaanRadio4);
-        cb_pagi1 = findViewById(R.id.cb_pagi_1);
-        cb_siang1 = findViewById(R.id.cb_siang_1);
-        cb_malam1 = findViewById(R.id.cb_malam_1);
-        //cb_pagi2 = findViewById(R.id.cb_pagi_2);
-        cb_siang2 = findViewById(R.id.cb_siang_2);
-        cb_sore2 = findViewById(R.id.cb_sore_2);
-        //cb_malam2 = findViewById(R.id.cb_malam_2);
-        cb_bangun2 = findViewById(R.id.cb_bangun_2);
-        cb_makan2 = findViewById(R.id.cb_makan_2);
-        cb_tidur2 = findViewById(R.id.cb_tidur_2);
-
-        rg1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                switch (checkedId){
-                    case 1:
-                        BobotP1=5;
-                        SelectedP1 = "Sangat Sering";
-                        break;
-                    case 2:
-                        BobotP1=4;
-                        SelectedP1 = "Sering";
-                        break;
-                    case 3:
-                        BobotP1=3;
-                        SelectedP1 = "Cukup Sering";
-                        break;
-                    case 4:
-                        BobotP1=2;
-                        SelectedP1 = "Jarang";
-                        break;
-                    case 5:
-                        BobotP1=1;
-                        SelectedP1 = "Sangat Jarang";
-                        break;
-                }
-                Log.d( "onCheckedChanged: ", ""+BobotP1);
-            }
-        });
-
-        cb_pagi1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB1.add("Pagi");
-                }else{
-                    selectedCB1.remove("Pagi");
-                }
-            }
-        });
-
-        cb_siang1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB1.add("Siang");
-                }else{
-                    selectedCB1.remove("Siang");
-                }
-            }
-        });
-
-        cb_malam1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB1.add("Malam");
-                }else{
-                    selectedCB1.remove("Malam");
-                }
-            }
-        });
-
-        rg2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d("onCheckedChanged: ",""+checkedId);
-                switch (checkedId){
-                    case 6:
-                        BobotP2=5;
-                        SelectedP2="Sangat Sering";
-                        break;
-                    case 7:
-                        BobotP2=4;
-                        SelectedP2="Sering";
-                        break;
-                    case 8:
-                        BobotP2=3;
-                        SelectedP2="Cukup Sering";
-                        break;
-                    case 9:
-                        BobotP2=2;
-                        SelectedP2="Jarang";
-                        break;
-                    case 10:
-                        BobotP2=1;
-                        SelectedP2="Sangat Jarang";
-                        break;
-                }
-                Log.d( "onCheckedChanged: ", ""+BobotP2);
-            }
-        });
-
-        cb_siang2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB2.add("Siang");
-                }else{
-                    selectedCB2.remove("Siang");
-                }
-            }
-        });
-
-        cb_sore2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB2.add("Sore");
-                }else{
-                    selectedCB2.remove("Sore");
-                }
-            }
-        });
-
-        cb_makan2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB2.add("Sesudah Makan");
-                }else{
-                    selectedCB2.remove("Sesudah Makan");
-                }
-            }
-        });
-
-        cb_bangun2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB2.add("Bangun Pagi");
-                }else{
-                    selectedCB2.remove("Bangun Pagi");
-                }
-            }
-        });
-
-        cb_tidur2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    selectedCB2.add("Sebelum Tidur");
-                }else{
-                    selectedCB2.remove("Sebelum Tidur");
-                }
-            }
-        });
-
-        rg3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case 11:
-                        BobotP3=5;
-                        SelectedP3="Sangat Sering";
-                        break;
-                    case 12:
-                        BobotP3=4;
-                        SelectedP3="Cukup Sering";
-                        break;
-                    case 13:
-                        BobotP3=3;
-                        SelectedP3="Sering";
-                        break;
-                    case 14:
-                        BobotP3=2;
-                        SelectedP3="Jarang";
-                        break;
-                    case 15:
-                        BobotP3=1;
-                        SelectedP3="Sangat Jarang";
-                        break;
-                }
-            }
-        });
-
-        rg4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d( "checkID: ", ""+checkedId);
-                switch (checkedId){
-                    case 16:
-                        BobotP4=5;
-                        SelectedP4="Sangat Sering";
-                        break;
-                    case 17:
-                        BobotP4=4;
-                        SelectedP4="Cukup Sering";
-                        break;
-                    case 18:
-                        BobotP4=3;
-                        SelectedP4="Sering";
-                        break;
-                    case 19:
-                        BobotP4=2;
-                        SelectedP4="Jarang";
-                        break;
-                    case 20:
-                        BobotP4=1;
-                        SelectedP4="Sangat Jarang";
-                        break;
-                }
-                Log.d( "hasilnya: ", ""+SelectedP4);
-            }
-        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int hasil = BobotP1+BobotP2+BobotP3+BobotP4+selectedCB2.size()+selectedCB1.size();
-                Log.d( "P1",""+BobotP1);
-                Log.d( "P2",""+BobotP2);
-                Log.d( "P3",""+BobotP3);
-                Log.d( "P4",""+BobotP4);
-                Log.d( "CB1",""+selectedCB1.size());
-                Log.d( "CB2",""+selectedCB2.size());
-                Log.d("onClick: ","Total Bobot = "+hasil);
+                int totalBobot = 0;
                 Map<String, Object> aspek = new HashMap<>();
                 Map<String, Object> perilaku = new HashMap<>();
-                Map<String, Object> pertanyaan1 = new HashMap<>();
-                Map<String, Object> pertanyaan2 = new HashMap<>();
+
+                Map<String, Object> pertanyaan1_1 = new HashMap<>();
+                pertanyaan1_1.put("Bobot", sb1_1.getValue());
+                perilaku.put("pertanyaan1_1", pertanyaan1_1);
+                totalBobot += sb1_1.getValue();
+
+                Map<String, Object> pertanyaan1_2 = new HashMap<>();
+                pertanyaan1_2.put("Bobot", sb1_2.getValue());
+                perilaku.put("pertanyaan1_2", pertanyaan1_2);
+                totalBobot += sb1_2.getValue();
+
+                Map<String, Object> pertanyaan1_3 = new HashMap<>();
+                pertanyaan1_3.put("Bobot", sb1_3.getValue());
+                perilaku.put("pertanyaan1_3", pertanyaan1_3);
+                totalBobot += sb1_3.getValue();
+
+                Map<String, Object> pertanyaan2_1 = new HashMap<>();
+                pertanyaan2_1.put("Bobot", sb2_1.getValue());
+                perilaku.put("pertanyaan2_1", pertanyaan2_1);
+                totalBobot += sb2_1.getValue();
+
+                Map<String, Object> pertanyaan2_2 = new HashMap<>();
+                pertanyaan2_2.put("Bobot", sb2_2.getValue());
+                perilaku.put("pertanyaan2_2", pertanyaan2_2);
+                totalBobot += sb2_2.getValue();
+
+                Map<String, Object> pertanyaan2_3 = new HashMap<>();
+                pertanyaan2_3.put("Bobot", sb2_3.getValue());
+                perilaku.put("pertanyaan2_3", pertanyaan2_3);
+                totalBobot += sb2_3.getValue();
+
                 Map<String, Object> pertanyaan3 = new HashMap<>();
-                Map<String, Object> pertanyaan4 = new HashMap<>();
-                Map<String, Object> pertanyaanCb1 = new HashMap<>();
-                Map<String, Object> pertanyaanCb2 = new HashMap<>();
-
-                pertanyaan1.put("Jawaban", SelectedP1);
-                pertanyaan1.put("Bobot", BobotP1);
-                perilaku.put("pertanyaan1", pertanyaan1);
-
-                pertanyaan2.put("Jawaban", SelectedP2);
-                pertanyaan2.put("Bobot", BobotP2);
-                perilaku.put("pertanyaan2", pertanyaan2);
-
-                pertanyaan3.put("Jawaban", SelectedP3);
-                pertanyaan3.put("Bobot", BobotP3);
+                pertanyaan3.put("Bobot", sb3.getValue());
                 perilaku.put("pertanyaan3", pertanyaan3);
+                totalBobot += sb3.getValue();
 
-                pertanyaan4.put("Jawaban", SelectedP4);
-                pertanyaan4.put("Bobot", BobotP4);
+                Map<String, Object> pertanyaan4 = new HashMap<>();
+                pertanyaan4.put("Bobot", sb4.getValue());
                 perilaku.put("pertanyaan4", pertanyaan4);
+                totalBobot += sb4.getValue();
 
-                pertanyaanCb1.put("Jawaban", selectedCB1);
-                pertanyaanCb1.put("Bobot", selectedCB1.size());
-                perilaku.put("pertanyaanCb1", pertanyaanCb1);
+                Map<String, Object> pertanyaan5 = new HashMap<>();
+                pertanyaan5.put("Bobot", sb5.getValue());
+                perilaku.put("pertanyaan5", pertanyaan5);
+                totalBobot += sb5.getValue();
 
-                pertanyaanCb2.put("Jawaban", selectedCB2);
-                pertanyaanCb2.put("Bobot", selectedCB2.size());
-                perilaku.put("pertanyaanCb2",pertanyaanCb2);
-                perilaku.put("total-bobot", hasil);
-                perilaku.put("hasil",getHasilKonsultasi(hasil));
-                aspek.put("perilaku",perilaku);
+                Map<String, Object> pertanyaan6 = new HashMap<>();
+                pertanyaan6.put("Bobot", sb6.getValue());
+                perilaku.put("pertanyaan6", pertanyaan6);
+                totalBobot += sb6.getValue();
+
+                Map<String, Object> pertanyaan7 = new HashMap<>();
+                pertanyaan7.put("Bobot", sb7.getValue());
+                perilaku.put("pertanyaan7", pertanyaan7);
+                totalBobot += sb7.getValue();
+
+                Map<String, Object> pertanyaan8 = new HashMap<>();
+                pertanyaan8.put("Bobot", sb8.getValue());
+                perilaku.put("pertanyaan8", pertanyaan8);
+                totalBobot += sb8.getValue();
+
+                Map<String, Object> pertanyaan9 = new HashMap<>();
+                pertanyaan9.put("Bobot", sb6.getValue());
+                perilaku.put("pertanyaan9", pertanyaan9);
+                totalBobot += sb9.getValue();
+
+                Map<String, Object> pertanyaan10 = new HashMap<>();
+                pertanyaan10.put("Bobot", sb10.getValue());
+                perilaku.put("pertanyaan10", pertanyaan10);
+                totalBobot += sb10.getValue();
+
+                Map<String, Object> pertanyaan11 = new HashMap<>();
+                pertanyaan11.put("Bobot", sb11.getValue());
+                perilaku.put("pertanyaan11", pertanyaan11);
+                totalBobot += sb11.getValue();
+
+                Map<String, Object> pertanyaan12 = new HashMap<>();
+                pertanyaan12.put("Bobot", sb12.getValue());
+                perilaku.put("pertanyaan12", pertanyaan12);
+                totalBobot += sb12.getValue();
+
+                Map<String, Object> pertanyaan13 = new HashMap<>();
+                pertanyaan13.put("Bobot", sb13.getValue());
+                perilaku.put("pertanyaan13", pertanyaan13);
+                totalBobot += sb13.getValue();
+
+                Map<String, Object> pertanyaan14 = new HashMap<>();
+                pertanyaan14.put("Bobot", sb14.getValue());
+                perilaku.put("pertanyaan14", pertanyaan14);
+                totalBobot += sb14.getValue();
+
+                Map<String, Object> pertanyaan15 = new HashMap<>();
+                pertanyaan15.put("Bobot", sb15.getValue());
+                perilaku.put("pertanyaan15", pertanyaan15);
+                totalBobot += sb15.getValue();
+
+                Map<String, Object> pertanyaan16 = new HashMap<>();
+                pertanyaan16.put("Bobot", sb16.getValue());
+                perilaku.put("pertanyaan16", pertanyaan16);
+                totalBobot += sb16.getValue();
+
+                Map<String, Object> pertanyaan17 = new HashMap<>();
+                pertanyaan17.put("Bobot", sb17.getValue());
+                perilaku.put("pertanyaan17", pertanyaan17);
+                totalBobot += sb17.getValue();
+
+                Map<String, Object> pertanyaan18 = new HashMap<>();
+                pertanyaan18.put("Bobot", sb18.getValue());
+                perilaku.put("pertanyaan18", pertanyaan18);
+                totalBobot += sb18.getValue();
+
+
+                perilaku.put("total-bobot", totalBobot);
+                perilaku.put("hasil", getHasilKonsultasi(totalBobot));
+                aspek.put("perilaku", perilaku);
                 SimpleDateFormat dateFormat = new SimpleDateFormat();
                 dateFormat.applyPattern("dd MMMM yyyy");
-                dateFormat.format(new Date());
-                aspek.put("tanggal-konsultasi",dateFormat.format(new Date()));
+                aspek.put("tanggal-konsultasi", dateFormat.format(new Date()));
 
-                if(hasil<8){
-                    Toast.makeText(getApplicationContext(),"Jawab semua pertanyaan terlebih dahulu", Toast.LENGTH_SHORT).show();
-                }else{
-                    String docPath = "konsultasi"+(currentId+1);
-                    konsultasi.document(docPath).set(aspek).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Intent i = new Intent(AspekPerilakuActivity.this, AspekNonPerilaku.class);
-                                i.putExtra("docPath", docPath);
-                                startActivity(i);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    public void checkInitialData(){
-        konsultasi.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                String docPath = "konsultasi"+(task.getResult());
-                Log.d( "docPaths: ",docPath);
-                currentId = task.getResult().size();
-                konsultasi.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                String docPath = "konsultasi" + (currentId + 1);
+                konsultasi.document(docPath).set(aspek).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                        if(task.getResult().get("perilaku")!=null && task.getResult().get("non-perilaku")==null){
-                            Log.d("onComplete: ","Ada");
-                            Intent i = new Intent(AspekPerilakuActivity.this,AspekNonPerilaku.class);
-                            i.putExtra("docPath",docPath);
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Intent i = new Intent(AspekPerilakuActivity.this, AspekNonPerilaku.class);
+                            i.putExtra("docPath", docPath);
                             startActivity(i);
                             finish();
-                        }else{
-                            Log.d("onComplete: ","Ga Ada, lanjut");
                         }
                     }
                 });
@@ -389,11 +272,32 @@ public class AspekPerilakuActivity extends AppCompatActivity {
         });
     }
 
-    public boolean getHasilKonsultasi(int bobot){
-        if(bobot>15){
-            return true;
-        }else{
-            return false;
-        }
+    public void checkInitialData() {
+        konsultasi.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                String docPath = "konsultasi" + (task.getResult());
+                Log.d("docPaths: ", docPath);
+                currentId = task.getResult().size();
+                konsultasi.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                        if (task.getResult().get("perilaku") != null && task.getResult().get("non-perilaku") == null) {
+                            Log.d("onComplete: ", "Ada");
+                            Intent i = new Intent(AspekPerilakuActivity.this, AspekNonPerilaku.class);
+                            i.putExtra("docPath", docPath);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Log.d("onComplete: ", "Ga Ada, lanjut");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    public boolean getHasilKonsultasi(int bobot) {
+        return bobot > 78;
     }
 }

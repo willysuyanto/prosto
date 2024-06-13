@@ -30,7 +30,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="8dp">
                 <LinearLayout
@@ -49,66 +49,29 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginBottom="8dp"
-                        android:text="Apakah membersihkan gigi tiruan setiap hari?"/>
-                    <RadioGroup
-                        android:id="@+id/pertanyaanRadio1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Cukup Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Jarang"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Jarang"
-                            />
+                        android:text="@string/perilaku_pertanyaan1"/>
 
-                    </RadioGroup>
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/pertanyaan1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginVertical="8dp"
-                        android:text="Waktu Membersihkan gigi tiruan :"/>
-                    <CheckBox
-                        android:id="@+id/cb_pagi_1"
+                        android:orientation="vertical"/>
+                    <LinearLayout
+                        android:id="@+id/pertanyaan1_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Pagi"/>
-                    <CheckBox
-                        android:id="@+id/cb_siang_1"
+                        android:orientation="vertical"/>
+                    <LinearLayout
+                        android:id="@+id/pertanyaan1_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Siang"/>
-                    <CheckBox
-                        android:id="@+id/cb_malam_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Malam"/>
+                        android:orientation="vertical"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="8dp">
                 <LinearLayout
@@ -127,76 +90,29 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginBottom="8dp"
-                        android:text="Apakah melakukan penyikatan gigi setiap hari?"/>
-                    <RadioGroup
-                        android:id="@+id/pertanyaanRadio2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Cukup Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Jarang"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Jarang"
-                            />
+                        android:text="@string/perilaku_pertanyaan2"/>
 
-                    </RadioGroup>
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/pertanyaan2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginVertical="8dp"
-                        android:text="Waktu menyikat gigi tiruan :"/>
-                    <CheckBox
-                        android:id="@+id/cb_bangun_2"
+                        android:orientation="vertical"/>
+                    <LinearLayout
+                        android:id="@+id/pertanyaan2_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bangun Pagi"/>
-                    <CheckBox
-                        android:id="@+id/cb_siang_2"
+                        android:orientation="vertical"/>
+                    <LinearLayout
+                        android:id="@+id/pertanyaan2_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Siang"/>
-                    <CheckBox
-                        android:id="@+id/cb_sore_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sore"/>
-                    <CheckBox
-                        android:id="@+id/cb_tidur_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sebelum Tidur"/>
-                    <CheckBox
-                        android:id="@+id/cb_makan_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sesudah Makan"/>
+                        android:orientation="vertical"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="8dp">
                 <LinearLayout
@@ -210,49 +126,24 @@
                         android:text="Pertanyaan 3"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:layout_marginBottom="8dp"
-                        android:text="Seberapa sering melakukan perendaman gigi tiruan pada malam hari?"/>
-                    <RadioGroup
-                        android:id="@+id/pertanyaanRadio3"
+                        android:text="@string/perilaku_pertanyaan3"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan3"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Cukup Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Jarang"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Jarang"
-                            />
-
-                    </RadioGroup>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="8dp">
                 <LinearLayout
@@ -266,43 +157,452 @@
                         android:text="Pertanyaan 4"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:layout_marginBottom="8dp"
-                        android:text="Seberapa sering melepaskan gigi tiruan sebelum tidur?"/>
-                    <RadioGroup
-                        android:id="@+id/pertanyaanRadio4"
+                        android:text="@string/perilaku_pertanyaan4"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan4"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Cukup Sering"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Jarang"
-                            />
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Sangat Jarang"
-                            />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 5"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
 
-                    </RadioGroup>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan5"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 6"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan6"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 7"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan7"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 8"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan8"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 9"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan9"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 10"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan10"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 11"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan11"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 12"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan12"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 13"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan13"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 14"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan14"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 15"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan15"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 16"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan16"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 17"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan17"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan 18"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/perilaku_pertanyaan18"
+                        android:textColor="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/pertanyaan18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <Button

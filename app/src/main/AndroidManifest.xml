@@ -2,34 +2,58 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ladokgi.apps">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Ladokgi">
-        <activity android:name=".EditPasienActivity"></activity>
+        <activity
+            android:name=".UploadGambarGigi"
+            android:exported="true" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditPasienActivity" />
         <activity android:name=".CreatePasienActivity" />
         <activity android:name=".KonsultasiReviewActivity" />
-        <activity android:name=".DaftarPasienActivity" />
+        <activity android:name=".daftarpasien.DaftarPasienActivity" />
         <activity android:name=".KonsultasiPasienActivity" />
         <activity android:name=".AspekNonPerilaku" />
         <activity android:name=".AspekPerilakuActivity" />
         <activity
-            android:name=".RegistrasiActivity"
+            android:name=".register.RegistrasiActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DokterActivity"
+            android:name=".homepage.DokterActivity"
             android:label="@string/title_activity_dokter" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".homepage.MainActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.ladokgi.apps.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
     </application>
+
 
 </manifest>
