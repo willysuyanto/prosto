@@ -1,4 +1,4 @@
-package com.ladokgi.apps;
+package com.ladokgi.apps.daftarpasien;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.ladokgi.apps.daftarpasien.Pasien;
+import com.ladokgi.apps.R;
 
 import org.jetbrains.annotations.NotNull;
 

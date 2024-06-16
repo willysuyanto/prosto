@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +38,7 @@ public class PasienAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Pasien item = list.get(position);
+        Pasien item = list.get(holder.getAdapterPosition());
         holder.nama.setText(item.getNama());
         holder.alamat.setText(item.getAlamat());
         holder.telepon.setText(item.getTelepon());
@@ -52,13 +53,19 @@ public class PasienAdapter extends
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapterCallback.onEditClicked(position);
+                mAdapterCallback.onEditClicked(holder.getAdapterPosition());
             }
         });
         holder.hapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapterCallback.onDeleteClicked(position);
+                mAdapterCallback.onDeleteClicked(holder.getAdapterPosition());
+            }
+        });
+        holder.reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapterCallback.onResetPasswordClicked(holder.getAdapterPosition());
             }
         });
     }
@@ -81,8 +88,7 @@ public class PasienAdapter extends
         public TextView jenisK;
         public TextView pendidikan;
         public TextView lama;
-        public TextView edit;
-        public TextView hapus;
+        public Button edit, hapus, reset;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -94,11 +100,13 @@ public class PasienAdapter extends
             lama = itemView.findViewById(R.id.lama);
             edit = itemView.findViewById(R.id.edit);
             hapus = itemView.findViewById(R.id.hapus);
+            reset = itemView.findViewById(R.id.reset);
         }
     }
 
     public interface PasienAdapterCallback {
         void onEditClicked(int position);
         void onDeleteClicked(int position);
+        void onResetPasswordClicked(int position);
     }
 }

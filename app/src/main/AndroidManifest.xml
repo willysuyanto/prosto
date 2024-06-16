@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ladokgi.apps">
+    package="com.ladokgi.apps" >
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -14,18 +14,19 @@
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
-        android:theme="@style/Theme.Ladokgi">
+        android:theme="@style/Theme.Ladokgi" >
         <activity
             android:name=".UploadGambarGigi"
             android:exported="true" />
         <activity android:name=".EditProfileActivity" />
-        <activity android:name=".EditPasienActivity" />
+        <activity android:name=".daftarpasien.EditPasienActivity" />
         <activity android:name=".CreatePasienActivity" />
         <activity android:name=".konsultasi.KonsultasiReviewActivity" />
         <activity android:name=".daftarpasien.DaftarPasienActivity" />
+        <activity android:name=".daftarpasien.ResetPasswordActivity" />
         <activity android:name=".konsultasi.KonsultasiPasienActivity" />
         <activity android:name=".AspekNonPerilaku" />
         <activity android:name=".AspekPerilakuActivity" />
@@ -35,7 +36,7 @@
         <activity
             android:name=".homepage.DokterActivity"
             android:label="@string/title_activity_dokter" />
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".login.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,12 +49,11 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.ladokgi.apps.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
     </application>
-
 
 </manifest>

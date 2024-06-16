@@ -11,13 +11,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -31,19 +25,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ladokgi.apps.CreatePasienActivity;
-import com.ladokgi.apps.EditPasienActivity;
 import com.ladokgi.apps.R;
 import com.ladokgi.apps.utils.ExportCSV;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class DaftarPasienActivity extends AppCompatActivity implements PasienAdapter.PasienAdapterCallback {
@@ -151,6 +139,13 @@ public class DaftarPasienActivity extends AppCompatActivity implements PasienAda
         });
 
         alert.show();
+    }
+
+    @Override
+    public void onResetPasswordClicked(int position) {
+        Intent intent = new Intent(DaftarPasienActivity.this, ResetPasswordActivity.class);
+        intent.putExtra("pasien", pasiens.get(position));
+        startActivity(intent);
     }
 
     void exportDataPasienInCSV() {
