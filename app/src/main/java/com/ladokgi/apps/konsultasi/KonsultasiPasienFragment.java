@@ -1,4 +1,4 @@
-package com.ladokgi.apps;
+package com.ladokgi.apps.konsultasi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.ladokgi.apps.AspekPerilakuActivity;
+import com.ladokgi.apps.R;
 
 /**
  * A simple {@link Fragment} subclass.

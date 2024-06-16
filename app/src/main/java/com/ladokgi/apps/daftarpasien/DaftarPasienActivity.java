@@ -33,6 +33,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.ladokgi.apps.CreatePasienActivity;
 import com.ladokgi.apps.EditPasienActivity;
 import com.ladokgi.apps.R;
+import com.ladokgi.apps.utils.ExportCSV;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,15 +54,16 @@ public class DaftarPasienActivity extends AppCompatActivity implements PasienAda
     List<Pasien> pasiens = new ArrayList<>();
     RecyclerView rv;
     FloatingActionButton fab;
-
     Toolbar toolbar;
-
     ProgressDialog dialog;
+    private ExportCSV exportCSV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar_pasien);
+
+        exportCSV = new ExportCSV(this);
 
         rv = findViewById(R.id.rv_pasien);
         fab = findViewById(R.id.fab);
@@ -71,11 +73,7 @@ public class DaftarPasienActivity extends AppCompatActivity implements PasienAda
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId()==R.id.download){
-                    try {
-                        exportDataPasienInCSV();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    exportDataPasienInCSV();
                 }
                 return false;
             }
@@ -155,117 +153,21 @@ public class DaftarPasienActivity extends AppCompatActivity implements PasienAda
         alert.show();
     }
 
-    public  static  File commonDocumentDirPath(String FolderName){
-        File dir = null ;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            dir = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+ "/"+FolderName );
-        } else {
-            dir = new File(Environment.getExternalStorageDirectory() + "/"+FolderName);
+    void exportDataPasienInCSV() {
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"Nama Pasien", "Jenis Kelamin", "Alamat", "Nomor Telepon", "Pendidikan Terakhir", "Lama Menggunakan"});
+        for (Pasien pasien : pasiens) {
+            data.add(new String[]{pasien.nama, pasien.jenisK, pasien.alamat, pasien.telepon, pasien.pendidikan, pasien.lama});
         }
-        return  dir ;
 
+        String timestamp = Calendar.getInstance().get(Calendar.YEAR)+String.valueOf(Calendar.getInstance().get(Calendar.MONTH))+Calendar.getInstance().get(Calendar.DATE);
+        exportCSV.exportCSV(data, "data_pasien_"+timestamp+".csv");
     }
 
-    void exportDataPasienInCSV() throws IOException {
-        {
-
-            File folder = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath());
-
-            boolean var = false;
-            if (!folder.exists()) {
-                if(!folder.mkdir()){
-                    Log.d("exportDataPasienInCSV: ", "gagal gaes");
-                }
-            }
-            String timestamp = Calendar.getInstance().get(Calendar.YEAR) +String.valueOf(Calendar.getInstance().get(Calendar.MONTH))+Calendar.getInstance().get(Calendar.DATE);
-
-            final String filename = folder.getAbsolutePath() + "/"+timestamp+"-data-pasien.csv";
-
-            // show waiting screen
-            CharSequence contentTitle = getString(R.string.app_name);
-            dialog = ProgressDialog.show(
-                    DaftarPasienActivity.this, contentTitle, "Mohon Tunggu...",
-                    true);
-            final Handler handler = new Handler(Looper.getMainLooper()) {
-                @Override
-                public void handleMessage(Message msg) {
-                    if(msg.arg1==1){
-                        Toast.makeText(getApplicationContext(), "Berhasil Download Data",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Gagal Download Data: "+msg.obj.toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                }
-            };
-
-            new Thread() {
-                public void run() {
-                    try {
-
-                        FileWriter fw = new FileWriter(filename);
-                        Log.d("run: ", filename);
-
-                        fw.append("Nama Pasien");
-                        fw.append(',');
-
-                        fw.append("Jenis Kelamin");
-                        fw.append(',');
-
-                        fw.append("Alamat");
-                        fw.append(',');
-
-                        fw.append("Nomor Telepon");
-                        fw.append(',');
-
-                        fw.append("Pendidikan Terakhir");
-                        fw.append(',');
-
-                        fw.append("Lama Menggunakan");
-                        fw.append(',');
-
-                        fw.append('\n');
-
-                        // fw.flush();
-                        for (Pasien pasien:pasiens) {
-                            fw.append(pasien.nama);
-                            fw.append(',');
-
-                            fw.append(pasien.jenisK);
-                            fw.append(',');
-
-                            fw.append(pasien.alamat);
-                            fw.append(',');
-
-                            fw.append(pasien.telepon);
-                            fw.append(',');
-
-                            fw.append(pasien.pendidikan);
-                            fw.append(',');
-
-                            fw.append(pasien.lama);
-                            fw.append(',');
-
-                            fw.append('\n');
-                        }
-                        fw.close();
-
-                    } catch (Exception e) {
-                        Message msg = new Message();
-                        msg.arg1 = 2;
-                        msg.obj = e;
-                        handler.sendMessage(msg);
-                    }
-                    Message msg = new Message();
-                    msg.arg1 = 1;
-
-                    handler.sendMessage(msg);
-                    dialog.dismiss();
-                }
-            }.start();
-
-        }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        exportCSV.onRequestPermissionsResult(requestCode, grantResults);
     }
 
 }

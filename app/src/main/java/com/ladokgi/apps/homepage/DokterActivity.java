@@ -1,9 +1,11 @@
 package com.ladokgi.apps.homepage;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -48,5 +50,22 @@ public class DokterActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new DashboardDokterFragment()).commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DokterActivity.this);
+        builder.setMessage("Keluar dari aplikasi ?");
+        builder.setTitle("Konfirmasi");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ya", (DialogInterface.OnClickListener) (dialog, which) -> {
+            finish();
+        });
+        builder.setNegativeButton("Tidak", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

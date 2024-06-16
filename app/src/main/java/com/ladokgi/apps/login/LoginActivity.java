@@ -54,37 +54,39 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etUsername.getText().toString().equals("")){
+                if (etUsername.getText().toString().equals("")) {
                     Toaster("Username Tidak Boleh Kosong");
-                }else if(etPassword.getText().toString().equals("")){
+                } else if (etPassword.getText().toString().equals("")) {
                     Toaster("Password Tidak Boleh Kosong");
-                }else{
+                } else {
                     db.collection("users").document(etUsername.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                            if(task.isComplete()){
-                                if(task.getResult()!=null){
-                                    if(!etPassword.getText().toString().equals(task.getResult().get("password"))){
+                            if (task.isComplete()) {
+                                if (task.getResult() != null) {
+                                    if (!etPassword.getText().toString().equals(task.getResult().get("password"))) {
                                         Toaster("Password Salah");
-                                    }else{
+                                    } else {
                                         Toaster("Login Berhasil");
                                         Hawk.put("username", task.getResult().get("username"));
                                         Hawk.put("role", task.getResult().get("role"));
                                         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                                                 new Runnable() {
                                                     public void run() {
-                                                        if(task.getResult().get("role").equals("dokter")){
+                                                        if (task.getResult().get("role").equals("dokter")) {
                                                             Intent i = new Intent(LoginActivity.this, DokterActivity.class);
+                                                            finish();
                                                             startActivity(i);
-                                                        }else{
+                                                        } else {
                                                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                                            finish();
                                                             startActivity(i);
                                                         }
                                                     }
                                                 },
                                                 1000);
                                     }
-                                }else{
+                                } else {
 
                                 }
                             }
@@ -95,22 +97,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void Toaster(String text){
-        Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+    public void Toaster(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    public void CheckLogin(){
+    public void CheckLogin() {
         String session = Hawk.get("role");
-        if(session!=null){
-            if(session.equals("dokter")){
-                Intent i = new Intent(LoginActivity.this,DokterActivity.class);
-                startActivity(i);
-                finish();
-            }else{
-                Intent i = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(i);
-                finish();
+        if (session != null) {
+            Intent i;
+            if (session.equals("dokter")) {
+                i = new Intent(LoginActivity.this, DokterActivity.class);
+            } else {
+                i = new Intent(LoginActivity.this, MainActivity.class);
             }
+            startActivity(i);
+            finish();
         }
     }
 }

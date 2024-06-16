@@ -1,4 +1,4 @@
-package com.ladokgi.apps;
+package com.ladokgi.apps.konsultasi;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,15 +17,20 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.ladokgi.apps.R;
+import com.ladokgi.apps.daftarpasien.Pasien;
+import com.ladokgi.apps.utils.ExportCSV;
 import com.orhanobut.hawk.Hawk;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,6 +57,8 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
 
     DataKonsultasiAdapter adapter;
     RecyclerView.LayoutManager mLayoutManager;
+    FloatingActionButton btnExportCSV;
+    ExportCSV exportCSV;
 
     public KonsultasiReviewFragment() {
         // Required empty public constructor
@@ -90,6 +97,9 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_konsultasi_review, null);
         recyclerView = root.findViewById(R.id.rv_konsultasi_rev);
         textView = root.findViewById(R.id.no_data);
+        btnExportCSV = root.findViewById(R.id.download_csv);
+
+        exportCSV = new ExportCSV(getActivity());
 
         Hawk.init(getContext()).build();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -109,9 +119,14 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                                     for(DocumentSnapshot docsnap : Objects.requireNonNull(task.getResult())){
-                                        Log.d("Nama Pasien: ", ds.getString("nama"));
                                         if(Objects.equals(docsnap.getString("status"), "pending")){
                                         DataKonsultasi datas = new DataKonsultasi(ds.getString("nama"), docsnap.getString("tanggal-konsultasi"),docsnap.getBoolean("perilaku.hasil"), docsnap.getBoolean("non-perilaku.hasil"),docsnap.getString("status"), ds.getString("username"),docsnap.getId());
+                                        if (docsnap.get("perilaku.total-bobot") != null) {
+                                            datas.setTotalBobotPerilaku(String.valueOf(docsnap.get("perilaku.total-bobot", Integer.class)));
+                                        }
+                                        if (docsnap.get("non-perilaku.total-bobot") != null) {
+                                            datas.setTotalBobotNonPerilaku(String.valueOf(docsnap.get("non-perilaku.total-bobot", Integer.class)));
+                                        }
                                         list.add(datas);
                                         }
                                     }
@@ -135,6 +150,12 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
 
+        btnExportCSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exportDataInCSV();
+            }
+        });
         // Inflate the layout for this fragment
         return root;
     }
@@ -146,5 +167,26 @@ public class KonsultasiReviewFragment extends Fragment implements DataKonsultasi
         i.putExtra("username", list.get(position).getUserName());
         i.putExtra("idKonsultasi", list.get(position).getIdKonsultasi());
         startActivity(i);
+    }
+
+    void exportDataInCSV() {
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"Nama Pasien", "Tanggal Konsultasi", "Bobot Aspek Perilaku", "Bobot Aspek Non Perilaku", "Rekomendasi"});
+        for (DataKonsultasi dataKonsultasi : list) {
+            data.add(new String[]{dataKonsultasi.getNamaPasien(), dataKonsultasi.getTanggal(), dataKonsultasi.getTotalBobotPerilaku(), dataKonsultasi.getTotalBobotNonPerilaku(), calculateHasil(dataKonsultasi.isHasilPerilaku(), dataKonsultasi.isHasilNonPerilaku())});
+        }
+
+        String timestamp = Calendar.getInstance().get(Calendar.YEAR)+String.valueOf(Calendar.getInstance().get(Calendar.MONTH))+Calendar.getInstance().get(Calendar.DATE)+Calendar.getInstance().get(Calendar.MINUTE);
+        exportCSV.exportCSV(data, "data_konsultasi_"+timestamp+".csv");
+    }
+
+    private String calculateHasil(boolean h1, boolean h2){
+        if(h1 && h2){
+            return "Tidak disarankan berobat";
+        }else if(h1 || h2){
+            return "Disarankan berobat";
+        }else {
+            return "Harus berobat";
+        }
     }
 }

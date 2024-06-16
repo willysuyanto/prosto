@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ladokgi.apps.daftarpasien.DaftarPasienActivity;
-import com.ladokgi.apps.KonsultasiPasienActivity;
+import com.ladokgi.apps.konsultasi.KonsultasiPasienActivity;
 import com.ladokgi.apps.R;
 import com.orhanobut.hawk.Hawk;
 

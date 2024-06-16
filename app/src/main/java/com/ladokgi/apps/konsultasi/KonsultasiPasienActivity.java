@@ -1,14 +1,13 @@
-package com.ladokgi.apps;
+package com.ladokgi.apps.konsultasi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.ladokgi.apps.databinding.ActivityKonsultasiPasienBinding;
+import com.ladokgi.apps.R;
 
 public class KonsultasiPasienActivity extends AppCompatActivity {
 

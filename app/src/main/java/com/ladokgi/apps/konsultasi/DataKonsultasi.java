@@ -1,8 +1,4 @@
-package com.ladokgi.apps;
-
-import android.provider.ContactsContract;
-
-import java.util.List;
+package com.ladokgi.apps.konsultasi;
 
 public class DataKonsultasi {
     private String namaPasien;
@@ -12,6 +8,24 @@ public class DataKonsultasi {
     private String status;
     private String userName;
     private String idKonsultasi;
+    private String totalBobotPerilaku, totalBobotNonPerilaku;
+
+    public String getTotalBobotPerilaku() {
+        return totalBobotPerilaku;
+    }
+
+    public void setTotalBobotPerilaku(String totalBobotPerilaku) {
+        this.totalBobotPerilaku = totalBobotPerilaku;
+    }
+
+    public String getTotalBobotNonPerilaku() {
+        return totalBobotNonPerilaku;
+    }
+
+    public void setTotalBobotNonPerilaku(String totalBobotNonPerilaku) {
+        this.totalBobotNonPerilaku = totalBobotNonPerilaku;
+    }
+
 
     public DataKonsultasi(String namaPasien, String tanggal, boolean hasilPerilaku, boolean hasilNonPerilaku, String status, String userName, String idKonsultasi) {
         this.namaPasien = namaPasien;

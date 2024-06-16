@@ -24,9 +24,9 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".EditPasienActivity" />
         <activity android:name=".CreatePasienActivity" />
-        <activity android:name=".KonsultasiReviewActivity" />
+        <activity android:name=".konsultasi.KonsultasiReviewActivity" />
         <activity android:name=".daftarpasien.DaftarPasienActivity" />
-        <activity android:name=".KonsultasiPasienActivity" />
+        <activity android:name=".konsultasi.KonsultasiPasienActivity" />
         <activity android:name=".AspekNonPerilaku" />
         <activity android:name=".AspekPerilakuActivity" />
         <activity

@@ -22,8 +22,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ladokgi.apps.AspekPerilakuActivity;
-import com.ladokgi.apps.Konsultasi;
-import com.ladokgi.apps.KonsultasiAdapter;
+import com.ladokgi.apps.konsultasi.Konsultasi;
+import com.ladokgi.apps.konsultasi.KonsultasiAdapter;
 import com.ladokgi.apps.R;
 import com.orhanobut.hawk.Hawk;
 

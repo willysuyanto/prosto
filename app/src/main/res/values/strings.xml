@@ -33,6 +33,8 @@
     <string name="non_perilaku_pertanyaan8">Apakah Saudara/Saudari tidak mempunyai gigi berlubang/karies?</string>
     <string name="non_perilaku_pertanyaan9">Apakah Saudara/Saudari tidak mempunyai plak gigi?</string>
     <string name="non_perilaku_pertanyaan10">Apakah saudara/Saudari tidak mempunyai karang gigi?</string>
+    <string name="no_data">Belum ada data konsultasi</string>
+    <string name="download_data_konsultasi_csv">Download data konsultasi (CSV)</string>
     <string-array name="data_pendidikan">
         <item>SMA</item>
         <item>D3</item>

@@ -1,4 +1,4 @@
-package com.ladokgi.apps;
+package com.ladokgi.apps.konsultasi;
 
 public class Konsultasi {
     private String tanggal;
