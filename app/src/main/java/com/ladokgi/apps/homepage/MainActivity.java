@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ladokgi.apps.AkunFragment;
+import com.ladokgi.apps.notification.NotificationFragment;
 import com.ladokgi.apps.konsultasi.KonsultasiPasienFragment;
 import com.ladokgi.apps.R;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment home = new DashboardPasienFragment();
                 Fragment consult = new KonsultasiPasienFragment();
                 Fragment akun = new AkunFragment();
+                Fragment notif = new NotificationFragment();
 
                 switch (item.getItemId()) {
                     case R.id.nav_home:
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_consult:
                         active = consult;
+                        break;
+                    case R.id.nav_notification:
+                        active = notif;
                         break;
                     case R.id.nav_akun:
                         active = akun;

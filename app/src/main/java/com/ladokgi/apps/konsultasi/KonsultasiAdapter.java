@@ -43,6 +43,7 @@ public class KonsultasiAdapter extends RecyclerView.Adapter<KonsultasiAdapter.Vi
             holder.status.setText("Proses konsultasi sedang berlangsung");
         }else if (item.getStatus().equals("pending")){
             holder.status.setText("Sedang direview oleh dokter");
+            holder.hasil.setText("-");
         } else {
             holder.status.setText("Hasil telah diverifikasi oleh dokter");
         }

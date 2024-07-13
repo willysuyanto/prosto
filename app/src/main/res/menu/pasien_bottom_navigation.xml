@@ -12,6 +12,11 @@
         android:title="Konsultasi" />
 
     <item
+        android:id="@+id/nav_notification"
+        android:icon="@drawable/baseline_notifications_active_24"
+        android:title="Notifikasi" />
+
+    <item
         android:id="@+id/nav_akun"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Akun Saya" />

@@ -24,6 +24,12 @@ import com.ladokgi.apps.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class KonsultasiReviewActivity extends AppCompatActivity {
 
     TextView bobotP, bobotNp, kesimpulan;
@@ -96,6 +102,12 @@ public class KonsultasiReviewActivity extends AppCompatActivity {
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Konsultasi dikonfirmasi", Toast.LENGTH_SHORT).show();
+                            String timeStamp = new SimpleDateFormat("dd MMMM yyyy HH.mm").format(new Date());
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("title", "Pemberitahuan");
+                            data.put("message", "Konsultasi anda telah selesai ditinjau oleh Dokter. Silahkan cek hasil konsultasi anda pada Dashboard aplikasi.");
+                            data.put("date", timeStamp);
+                            db.collection("users").document(userName).collection("notifikasi").document(UUID.randomUUID().toString()).set(data);
                             finish();
                         }
                     }

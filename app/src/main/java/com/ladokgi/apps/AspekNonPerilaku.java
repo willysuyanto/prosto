@@ -21,8 +21,11 @@ import com.orhanobut.hawk.Hawk;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AspekNonPerilaku extends AppCompatActivity {
 
@@ -85,6 +88,7 @@ public class AspekNonPerilaku extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Hawk.init(getApplicationContext()).build();
         String currentUser = Hawk.get("username");
+        CollectionReference notifikasi = db.collection("users").document(currentUser).collection("notifikasi");
         CollectionReference konsultasi = db.collection("users").document(currentUser).collection("konsultasi");
         if (extras != null) {
             docPath = extras.getString("docPath");
@@ -158,6 +162,12 @@ public class AspekNonPerilaku extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Intent i = new Intent(AspekNonPerilaku.this, UploadGambarGigi.class);
                             i.putExtra("docPath",docPath);
+                            String timeStamp = new SimpleDateFormat("dd MMMM yyyy HH.mm").format(new Date());
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("title", "Konsultasi Selesai");
+                            data.put("message", "Terima kasih telah melakukan konsultasi. Konsultasi anda akan segera ditinjau oleh Dokter.");
+                            data.put("date", timeStamp);
+                            notifikasi.document(UUID.randomUUID().toString()).set(data);
                             startActivity(i);
                             finish();
                         }

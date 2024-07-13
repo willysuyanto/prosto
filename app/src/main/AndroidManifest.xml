@@ -36,7 +36,7 @@
         <activity
             android:name=".homepage.DokterActivity"
             android:label="@string/title_activity_dokter" />
-        <activity android:name=".login.LoginActivity" >
+        <activity android:name=".login.LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

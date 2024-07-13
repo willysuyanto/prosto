@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ladokgi.apps.R;
 import com.ladokgi.apps.utils.ExportCSV;
@@ -114,7 +115,7 @@ public class KonsultasiDoneFragment extends Fragment implements DataKonsultasiAd
                     for(DocumentSnapshot ds: task.getResult()){
                         if(ds.get("role").equals("pasien")){
                             CollectionReference konsultasi = users.document(ds.getString("username")).collection("konsultasi");
-                            konsultasi.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            konsultasi.orderBy("tanggal-konsultasi", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                                     for(DocumentSnapshot docsnap : task.getResult()){
@@ -134,7 +135,7 @@ public class KonsultasiDoneFragment extends Fragment implements DataKonsultasiAd
                                     if(list.size()>0){
                                         recyclerView.setVisibility(View.VISIBLE);
                                         textView.setVisibility(View.GONE);
-                                        adapter.notifyDataSetChanged();
+                                        adapter.notifyItemChanged(0);
                                     }
                                 }
                             });

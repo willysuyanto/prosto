@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ladokgi.apps.AspekPerilakuActivity;
 import com.ladokgi.apps.konsultasi.Konsultasi;
@@ -112,16 +113,12 @@ public class DashboardPasienFragment extends Fragment implements KonsultasiAdapt
         });
 
         CollectionReference konsultasi = db.collection("users").document(currentUser).collection("konsultasi");
-        konsultasi.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        konsultasi.orderBy("tanggal-konsultasi", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for (DocumentSnapshot data : task.getResult()){
-                        //list.add(new Konsultasi(data.get("tanggal-konsultasi"),data.get(),));
-                        Log.d("tanggal: ", ""+data.get("tanggal-konsultasi"));
-                        Log.d("aspek perilaku: ", ""+data.get("perilaku.hasil"));
-                        Log.d("aspek non perilaku: ", ""+data.get("non-perilaku.hasil"));
-                        Log.d("status: ", ""+data.get("status"));
+
                         String tanggal = data.get("tanggal-konsultasi", String.class);
 
                         boolean hasilP = false;
