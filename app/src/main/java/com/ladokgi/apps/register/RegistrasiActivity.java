@@ -1,154 +1,109 @@
 package com.ladokgi.apps.register;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.ladokgi.apps.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.ladokgi.apps.data.ApiCallback;
+import com.ladokgi.apps.data.UserRepository;
+import com.ladokgi.apps.databinding.ActivityRegistrasiBinding;
 import com.ladokgi.apps.login.LoginActivity;
+import com.ladokgi.apps.util.ProfileSpinners;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class RegistrasiActivity extends AppCompatActivity {
 
-    Button btnDaftar;
-    EditText etUsername, etPassword, etNama, etPhone, etAddress;
-    Spinner spinner, spTahun, spJenkel;
+    private ActivityRegistrasiBinding binding;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrasi);
+        binding = ActivityRegistrasiBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        spinner = (Spinner) findViewById(R.id.spn);
-        spTahun = (Spinner) findViewById(R.id.spn2);
-        spJenkel = (Spinner) findViewById(R.id.spn3);
-        ArrayList<String> years = new ArrayList<>();
-        ArrayList<String> strings = new ArrayList<>();
-        ArrayList<String> jenkels = new ArrayList<>();
+        userRepository = new UserRepository();
+        ProfileSpinners.bind(binding.spn3, binding.spn, binding.spn2);
 
-        jenkels.add("Jenis Kelamin");
-        jenkels.add("Laki-Laki");
-        jenkels.add("Perempuan");
-
-        years.add("Menggunakan gigi tiruan sejak");
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        int currentYear = calendar.get(Calendar.YEAR);
-        Log.d( "calendar: ", String.valueOf(currentYear));
-        for (int i=currentYear; i>=1990; i--){
-            Log.d( "onCreate: ", String.valueOf(i));
-            years.add(String.valueOf(i));
-        }
-        strings.add("Pendidikan Terakhir");
-        strings.add("SMA") ;
-        strings.add("D3");
-        strings.add("S1");
-        strings.add("S2");
-        strings.add("S3");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, strings);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, years);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, jenkels);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spTahun.setAdapter(adapter2);
-        spJenkel.setAdapter(adapter3);
-
-        etUsername = findViewById(R.id.username);
-        etPassword = findViewById(R.id.password);
-        etNama = findViewById(R.id.nama);
-        etPhone = findViewById(R.id.nomor_tlp);
-        etAddress = findViewById(R.id.alamat);
-        btnDaftar = findViewById(R.id.btn_daftar);
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etNama.getText().toString().equals("")){
-                    Toaster("Nama Lengkap Tidak Boleh Kosong");
-                }else if(etPhone.getText().toString().equals("")){
-                    Toaster("Nomor Telepon Tidak Boleh Kosong");
-                }else if(etAddress.getText().toString().equals("")){
-                    Toaster("Alamat Tidak Boleh Kosong");
-                }else if(spJenkel.getSelectedItem().toString().equals("Jenis Kelamin")){
-                    Toaster("Pilih Jenis Kelamin");
-                }else if(spinner.getSelectedItem().toString().equals("Pendidikan Terakhir")){
-                    Toaster("Pilih Pendidikan Terakhir");
-                }else if(spTahun.getSelectedItem().toString().equals("Menggunakan gigi tiruan sejak")){
-                    Toaster("Pilih Tahun Menggunakan Gigi Tiruan");
-                }else if(etUsername.getText().toString().equals("")){
-                    Toaster("Username Tidak Boleh Kosong");
-                }else if(etPassword.getText().toString().equals("")){
-                    Toaster("Password Tidak Boleh Kosong");
-                }else{
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("nama", etNama.getText().toString());
-                    user.put("telepon", etPhone.getText().toString());
-                    user.put("alamat", etAddress.getText().toString());
-                    user.put("pendidikan", spinner.getSelectedItem().toString());
-                    user.put("lama-menggunakan", spTahun.getSelectedItem().toString());
-                    user.put("jenis-kelamin", spJenkel.getSelectedItem().toString());
-                    user.put("username", etUsername.getText().toString());
-                    user.put("password", etPassword.getText().toString());
-                    user.put("role", "pasien");
-                    db.collection("users").document(etUsername.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                            if(task.isComplete()){
-                                if(task.getResult().exists()){
-                                    Toaster("Username Sudah Digunakan");
-                                }else{
-                                    db.collection("users").document(etUsername.getText().toString()).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                            if(task.isComplete()){
-                                                Toaster("Berhasil Buat Akun");
-                                                new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                                                        new Runnable() {
-                                                            public void run() {
-                                                                Intent i = new Intent(RegistrasiActivity.this, LoginActivity.class);
-                                                                startActivity(i);
-                                                            }
-                                                        },
-                                                        1000);
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        });
+        binding.btnDaftar.setOnClickListener(v -> submit());
     }
 
+    private void submit() {
+        if (binding.nama.getText().toString().equals("")) {
+            Toaster("Nama Lengkap Tidak Boleh Kosong");
+            return;
+        }
+        if (binding.nomorTlp.getText().toString().equals("")) {
+            Toaster("Nomor Telepon Tidak Boleh Kosong");
+            return;
+        }
+        if (binding.alamat.getText().toString().equals("")) {
+            Toaster("Alamat Tidak Boleh Kosong");
+            return;
+        }
+        if (ProfileSpinners.isPlaceholder(binding.spn3)) {
+            Toaster("Pilih Jenis Kelamin");
+            return;
+        }
+        if (ProfileSpinners.isPlaceholder(binding.spn)) {
+            Toaster("Pilih Pendidikan Terakhir");
+            return;
+        }
+        if (ProfileSpinners.isPlaceholder(binding.spn2)) {
+            Toaster("Pilih Tahun Menggunakan Gigi Tiruan");
+            return;
+        }
+        if (binding.username.getText().toString().equals("")) {
+            Toaster("Username Tidak Boleh Kosong");
+            return;
+        }
+        if (binding.password.getText().toString().equals("")) {
+            Toaster("Password Tidak Boleh Kosong");
+            return;
+        }
+        Map<String, Object> user = new HashMap<>();
+        user.put("nama", binding.nama.getText().toString());
+        user.put("telepon", binding.nomorTlp.getText().toString());
+        user.put("alamat", binding.alamat.getText().toString());
+        user.put("pendidikan", binding.spn.getText().toString());
+        user.put("lama-menggunakan", binding.spn2.getText().toString());
+        user.put("jenis-kelamin", binding.spn3.getText().toString());
+        user.put("username", binding.username.getText().toString());
+        user.put("role", "pasien");
 
-    public void Toaster(String text){
-        Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+        binding.btnDaftar.setEnabled(false);
+        userRepository.register(user, binding.username.getText().toString(), binding.password.getText().toString(),
+                new ApiCallback.SuccessError() {
+                    @Override
+                    public void onSuccess() {
+                        binding.btnDaftar.setEnabled(true);
+                        Toaster("Berhasil Buat Akun");
+                        new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> {
+                            Intent i = new Intent(RegistrasiActivity.this, LoginActivity.class);
+                            startActivity(i);
+                            finish();
+                        }, 800);
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        binding.btnDaftar.setEnabled(true);
+                        String msg = e != null ? e.getMessage() : "Gagal mendaftar";
+                        if ("exists".equals(msg)) {
+                            Toaster("Username Sudah Digunakan");
+                        } else {
+                            Toaster(msg);
+                        }
+                    }
+                });
+    }
+
+    private void Toaster(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,13 +1,11 @@
 package com.ladokgi.apps.konsultasi;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.os.Bundle;
 
-import com.google.android.material.tabs.TabLayout;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.ladokgi.apps.R;
+import com.ladokgi.apps.databinding.ActivityKonsultasiPasienBinding;
 
 public class KonsultasiPasienActivity extends AppCompatActivity {
 
@@ -16,13 +14,12 @@ public class KonsultasiPasienActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_konsultasi_pasien);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ViewPager2 viewPager = findViewById(R.id.pager);
-        viewPager.setAdapter(new KonsultasiPagerAdapter(this));
-        new TabLayoutMediator(tabLayout, viewPager,
+        ActivityKonsultasiPasienBinding binding = ActivityKonsultasiPasienBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.pager.setAdapter(new KonsultasiPagerAdapter(this));
+        new TabLayoutMediator(binding.tabLayout, binding.pager,
                 (tab, position) -> tab.setText(titles[position])
         ).attach();
-
     }
 }

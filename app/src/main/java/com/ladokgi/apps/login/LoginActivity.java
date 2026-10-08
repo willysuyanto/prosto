@@ -1,117 +1,90 @@
 package com.ladokgi.apps.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.ladokgi.apps.R;
+import com.ladokgi.apps.data.SessionManager;
+import com.ladokgi.apps.data.UserRepository;
+import com.ladokgi.apps.databinding.ActivityLoginBinding;
 import com.ladokgi.apps.homepage.DokterActivity;
 import com.ladokgi.apps.homepage.MainActivity;
-import com.ladokgi.apps.R;
 import com.ladokgi.apps.register.RegistrasiActivity;
 import com.orhanobut.hawk.Hawk;
 
-import org.jetbrains.annotations.NotNull;
-
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin, btnDaftar;
-    EditText etUsername, etPassword;
+    private ActivityLoginBinding binding;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Hawk.init(getApplicationContext()).build();
-        CheckLogin();
+        SessionManager.init(this);
+        userRepository = new UserRepository();
 
-        btnLogin = findViewById(R.id.btn_login);
-        btnDaftar = findViewById(R.id.btn_daftar);
-        etUsername = findViewById(R.id.username);
-        etPassword = findViewById(R.id.password);
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, RegistrasiActivity.class);
-                startActivity(i);
-            }
-        });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (etUsername.getText().toString().equals("")) {
-                    Toaster("Username Tidak Boleh Kosong");
-                } else if (etPassword.getText().toString().equals("")) {
-                    Toaster("Password Tidak Boleh Kosong");
-                } else {
-                    db.collection("users").document(etUsername.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                            if (task.isComplete()) {
-                                if (task.getResult() != null) {
-                                    if (!etPassword.getText().toString().equals(task.getResult().get("password"))) {
-                                        Toaster("Password Salah");
-                                    } else {
-                                        Toaster("Login Berhasil");
-                                        Hawk.put("username", task.getResult().get("username"));
-                                        Hawk.put("role", task.getResult().get("role"));
-                                        new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        if (task.getResult().get("role").equals("dokter")) {
-                                                            Intent i = new Intent(LoginActivity.this, DokterActivity.class);
-                                                            finish();
-                                                            startActivity(i);
-                                                        } else {
-                                                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                                            finish();
-                                                            startActivity(i);
-                                                        }
-                                                    }
-                                                },
-                                                1000);
-                                    }
-                                } else {
-
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    public void Toaster(String text) {
-        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    public void CheckLogin() {
-        String session = Hawk.get("role");
-        if (session != null) {
-            Intent i;
-            if (session.equals("dokter")) {
-                i = new Intent(LoginActivity.this, DokterActivity.class);
-            } else {
-                i = new Intent(LoginActivity.this, MainActivity.class);
-            }
-            startActivity(i);
-            finish();
+        if (SessionManager.isLoggedIn()) {
+            redirectByRole(SessionManager.getRole());
+            return;
         }
+
+        binding.btnDaftar.setOnClickListener(v -> {
+            Intent i = new Intent(LoginActivity.this, RegistrasiActivity.class);
+            startActivity(i);
+        });
+
+        binding.btnLogin.setOnClickListener(v -> {
+            String username = binding.etUsername.getText() != null ? binding.etUsername.getText().toString().trim() : "";
+            String password = binding.etPassword.getText() != null ? binding.etPassword.getText().toString().trim() : "";
+            if (username.isEmpty()) {
+                Toaster("Username Tidak Boleh Kosong");
+                return;
+            }
+            if (password.isEmpty()) {
+                Toaster("Password Tidak Boleh Kosong");
+                return;
+            }
+            binding.btnLogin.setEnabled(false);
+            userRepository.login(username, password, new UserRepository.LoginCallback() {
+                @Override
+                public void onLoginSuccess(DocumentSnapshot result) {
+                    binding.btnLogin.setEnabled(true);
+                    Toaster("Login Berhasil");
+                    SessionManager.setUser(result);
+                    new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> redirectByRole(SessionManager.getRole()), 500);
+                }
+
+                @Override
+                public void onLoginFailure(String message) {
+                    binding.btnLogin.setEnabled(true);
+                    Toaster(message != null ? message : "Login Gagal");
+                }
+            });
+        });
+    }
+
+    private void redirectByRole(String role) {
+        Intent i;
+        if ("dokter".equals(role)) {
+            i = new Intent(LoginActivity.this, DokterActivity.class);
+        } else {
+            i = new Intent(LoginActivity.this, MainActivity.class);
+        }
+        startActivity(i);
+        finish();
+    }
+
+    private void Toaster(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 }

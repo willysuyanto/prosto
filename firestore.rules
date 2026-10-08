@@ -1,0 +1,53 @@
+rules_version = '2';
+
+// Firestore security rules for Prosto.
+//
+// IMPORTANT: this app currently authenticates against Firestore directly
+// (username + salted PBKDF2 hash in the user document) — it does NOT use
+// Firebase Authentication. Without request.auth we cannot prove *who* is
+// calling, so per-user ownership cannot be enforced here yet.
+//
+// These rules therefore do what is possible today:
+//   * never allow (re)introducing a plaintext "password" field,
+//   * validate the shape of documents the app writes,
+//   * constrain consultation status to the three known values.
+//
+// Migrating sign-in to Firebase Auth (recommended next step) allows
+// tightening this to e.g. `request.auth.uid == userId`, which is what
+// actually locks one patient's data away from another.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidStatus(status) {
+      return status == 'unfinished' || status == 'pending' || status == 'confirmed';
+    }
+
+    function hasNoPlaintextPassword(data) {
+      return !('password' in data)
+        && (!('passwordHash' in data) || data.passwordHash is string)
+        && (!('passwordSalt' in data) || data.passwordSalt is string);
+    }
+
+    match /users/{userId} {
+      allow read: if true; // doctor lists all patients; needs Firebase Auth to restrict
+
+      allow create, update: if hasNoPlaintextPassword(request.resource.data)
+        && request.resource.data.role in ['pasien', 'dokter'];
+
+      allow delete: if true; // requires Firebase Auth to restrict to doctors
+
+      match /konsultasi/{consultationId} {
+        allow read: if true;
+
+        // Status is optional on every write, but when present it must be one
+        // of the three values the app knows about.
+        allow create, update: if !('status' in request.resource.data)
+          || isValidStatus(request.resource.data.status);
+      }
+
+      match /notifikasi/{notificationId} {
+        allow read, write: if true;
+      }
+    }
+  }
+}

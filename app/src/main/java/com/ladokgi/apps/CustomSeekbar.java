@@ -66,7 +66,6 @@ public class CustomSeekbar {
             mSeekLabelAbove.setLayoutParams(params);
             mSeekLabelBelow.setLayoutParams(params2);
 
-
             addLabelsAboveSeekBar();
             addLabelsBelowSeekBar(response1,response2);
             parent.addView(mSeekLabelAbove);

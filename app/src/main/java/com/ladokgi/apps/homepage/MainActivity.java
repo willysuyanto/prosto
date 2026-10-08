@@ -1,81 +1,53 @@
 package com.ladokgi.apps.homepage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.ladokgi.apps.AkunFragment;
-import com.ladokgi.apps.notification.NotificationFragment;
-import com.ladokgi.apps.konsultasi.KonsultasiPasienFragment;
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
 import com.ladokgi.apps.R;
-
-import org.jetbrains.annotations.NotNull;
+import com.ladokgi.apps.data.SessionManager;
+import com.ladokgi.apps.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        SessionManager.init(this);
+
+        NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host);
+        if (navHost != null) {
+            NavController navController = navHost.getNavController();
+            NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
+        }
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                Fragment active = null;
-                Fragment home = new DashboardPasienFragment();
-                Fragment consult = new KonsultasiPasienFragment();
-                Fragment akun = new AkunFragment();
-                Fragment notif = new NotificationFragment();
-
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        active = home;
-                        break;
-                    case R.id.nav_consult:
-                        active = consult;
-                        break;
-                    case R.id.nav_notification:
-                        active = notif;
-                        break;
-                    case R.id.nav_akun:
-                        active = akun;
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        active).commit();
-
-                return true;
+            public void handleOnBackPressed() {
+                showExitConfirmation();
             }
         });
-        //I added this if statement to keep the selected fragment when rotating the device
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new DashboardPasienFragment()).commit();
-        }
     }
 
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage("Keluar dari aplikasi ?");
-        builder.setTitle("Konfirmasi");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Ya", (DialogInterface.OnClickListener) (dialog, which) -> {
-            finish();
-        });
-        builder.setNegativeButton("Tidak", (DialogInterface.OnClickListener) (dialog, which) -> {
-            dialog.cancel();
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+    private void showExitConfirmation() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setMessage(R.string.exit_confirm_message)
+                .setTitle(R.string.action_confirm_title)
+                .setCancelable(false)
+                .setPositiveButton(R.string.action_confirm, (DialogInterface.OnClickListener) (dialog, which) -> finish())
+                .setNegativeButton(R.string.action_no, (DialogInterface.OnClickListener) (dialog, which) -> dialog.cancel())
+                .show();
     }
 }

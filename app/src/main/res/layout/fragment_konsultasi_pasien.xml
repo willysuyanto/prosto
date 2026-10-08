@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Konsultasi"
-            app:titleTextColor="@color/white"
-            android:background="@color/purple_700"
+            app:titleTextColor="?attr/colorOnPrimary"
+            android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
             />
         <ImageView
@@ -37,8 +37,8 @@
             android:layout_margin="16dp"
             android:text="Konsultasi ini terbagi atas 2 aspek yaitu Aspek Perilaku dan Aspek non Perilaku"
             app:layout_constraintTop_toBottomOf="@id/image"
-            android:textColor="@color/black"/>
-        <Button
+            android:textColor="?attr/colorOnSurface"/>
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_konsultasi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_marginHorizontal="16dp"
             android:text="Setelah konsultasi, hasil konsultasi dapat dilihat pada menu Dashboard"
             app:layout_constraintTop_toBottomOf="@id/btn_konsultasi"
-            android:textColor="@color/black"/>
+            android:textColor="?attr/colorOnSurface"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

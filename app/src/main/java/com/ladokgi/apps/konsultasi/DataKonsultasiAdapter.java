@@ -38,14 +38,17 @@ public class DataKonsultasiAdapter extends RecyclerView.Adapter<DataKonsultasiAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DataKonsultasi item = list.get(position);
-        Log.d(TAG, "Data Adapter nama: "+ item.getNamaPasien());
+
         holder.tvNama.setText(item.getNamaPasien());
         holder.tvTanggal.setText(item.getTanggal());
         holder.tvHasil.setText(calculateHasil(item.isHasilPerilaku(),item.isHasilNonPerilaku()));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapterCallback.onRowDataKonsultasiAdapterClicked(position);
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    mAdapterCallback.onRowDataKonsultasiAdapterClicked(adapterPosition);
+                }
             }
         });
     }

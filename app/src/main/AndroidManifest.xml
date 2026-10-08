@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ladokgi.apps" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
+        android:name=".ProstoApp"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Ladokgi" >
+        android:theme="@style/Theme.Ladokgi">
         <activity
             android:name=".UploadGambarGigi"
             android:exported="true" />
@@ -33,9 +31,7 @@
         <activity
             android:name=".register.RegistrasiActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".homepage.DokterActivity"
-            android:label="@string/title_activity_dokter" />
+        <activity android:name=".homepage.DokterActivity" />
         <activity android:name=".login.LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

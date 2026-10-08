@@ -38,36 +38,50 @@ public class PasienAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Pasien item = list.get(holder.getAdapterPosition());
-        holder.nama.setText(item.getNama());
-        holder.alamat.setText(item.getAlamat());
-        holder.telepon.setText(item.getTelepon());
-        holder.jenisK.setText(item.getJenisK());
-        holder.pendidikan.setText(item.getPendidikan());
+        Pasien item = list.get(position);
+        holder.nama.setText(text(item.getNama()));
+        holder.alamat.setText(text(item.getAlamat()));
+        holder.telepon.setText(text(item.getTelepon()));
+        holder.jenisK.setText(text(item.getJenisK()));
+        holder.pendidikan.setText(text(item.getPendidikan()));
+        holder.lama.setText(formatLama(item.getLama()));
 
-        int now = Calendar.getInstance().get(Calendar.YEAR);
-        int tahun = Integer.parseInt(item.getLama());
-        int lamas = now - tahun;
-        holder.lama.setText(lamas+" Tahun");
+        holder.edit.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                mAdapterCallback.onEditClicked(pos);
+            }
+        });
+        holder.hapus.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                mAdapterCallback.onDeleteClicked(pos);
+            }
+        });
+        holder.reset.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                mAdapterCallback.onResetPasswordClicked(pos);
+            }
+        });
+    }
 
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAdapterCallback.onEditClicked(holder.getAdapterPosition());
-            }
-        });
-        holder.hapus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAdapterCallback.onDeleteClicked(holder.getAdapterPosition());
-            }
-        });
-        holder.reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAdapterCallback.onResetPasswordClicked(holder.getAdapterPosition());
-            }
-        });
+    private static String text(String value) {
+        return value == null ? "-" : value;
+    }
+
+    /** Shows "N Tahun" when the stored value is a year, otherwise the raw value. */
+    static String formatLama(String lama) {
+        if (lama == null || lama.trim().isEmpty()) {
+            return "-";
+        }
+        try {
+            int year = Integer.parseInt(lama.trim());
+            int years = Calendar.getInstance().get(Calendar.YEAR) - year;
+            return years < 0 ? lama : years + " Tahun";
+        } catch (NumberFormatException e) {
+            return lama;
+        }
     }
 
     @Override
@@ -90,7 +104,7 @@ public class PasienAdapter extends
         public TextView lama;
         public Button edit, hapus, reset;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             nama = itemView.findViewById(R.id.nama);
             alamat = itemView.findViewById(R.id.alamat);

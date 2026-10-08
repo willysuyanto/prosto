@@ -25,7 +25,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="18dp"/>
         <TextView
@@ -35,7 +35,7 @@
             android:text="RS LADOKGI TNI AL R.E MARTADINATA"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintTop_toBottomOf="@id/appname" />
 
         <LinearLayout
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:paddingHorizontal="16dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginTop="16dp"
             android:textAlignment="center"
             android:text="Halo, Selamat datang di dasboard pasien \n PROSTO MOBILE"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="Konsultasi Saya"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
             android:textSize="18sp"
@@ -118,8 +118,8 @@
                 android:textSize="18sp"
                 android:text="Belum ada data Konsultasi"
                 android:textAlignment="center"
-                android:textColor="@color/black" />
-            <Button
+                android:textColor="?attr/colorOnSurface" />
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_consultnow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

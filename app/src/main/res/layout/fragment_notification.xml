@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Notifikasi"
-            app:titleTextColor="@color/white"
-            android:background="@color/purple_700"
+            app:titleTextColor="?attr/colorOnPrimary"
+            android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="Belum ada notifikasi"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="?attr/colorOnSurface" />
 
     </LinearLayout>
 

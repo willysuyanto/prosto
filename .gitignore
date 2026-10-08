@@ -87,3 +87,14 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+# Signing secrets (never commit)
+keystore.properties
+*.jks
+
+# Firebase emulators
+firebase-debug.log
+*-debug.log
+.firebase/
+
+# macOS
+.DS_Store

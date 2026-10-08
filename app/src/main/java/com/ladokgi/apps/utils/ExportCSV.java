@@ -1,80 +1,95 @@
 package com.ladokgi.apps.utils;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.util.Log;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.net.Uri;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.activity.result.ActivityResultCaller;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
-import com.opencsv.CSVWriter;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * Saves a CSV through the Storage Access Framework, so no storage permission
+ * is required and the user picks the destination folder.
+ *
+ * The launcher must be registered on a lifecycle owner that is still below
+ * STARTED, so callers pass the owner explicitly (typically from onCreate()).
+ */
 public class ExportCSV {
-    private Activity activity;
 
-    public ExportCSV(Activity activity) {
-        this.activity = activity;
+    private static final String LINE_SEPARATOR = "\r\n";
+
+    private final Context context;
+    private final ActivityResultLauncher<String> createDocument;
+    private List<String[]> pendingData;
+
+    public ExportCSV(ActivityResultCaller caller, Context context) {
+        this.context = context;
+        this.createDocument = caller.registerForActivityResult(
+                new ActivityResultContracts.CreateDocument("text/csv"), this::onDocumentCreated);
     }
 
-    // Method to handle permission result
     public void exportCSV(List<String[]> data, String fileName) {
-        // Request storage permission if not granted
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            return;
-        }
-
-        // Check if external storage is writable
-        if (!isExternalStorageWritable()) {
-            Toast.makeText(activity, "External storage is not writable", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Get the Downloads directory
-        File downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(downloadsDirectory, fileName);
-        Log.d("TAG", "File path: " + file.getAbsolutePath());
-
-        try (FileWriter fileWriter = new FileWriter(file);
-             CSVWriter csvWriter = new CSVWriter(fileWriter)) {
-
-            csvWriter.writeAll(data);
-            Toast.makeText(activity, "CSV file exported successfully", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "CSV file exported successfully at " + file.getAbsolutePath());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(activity, "Error exporting CSV file", Toast.LENGTH_SHORT).show();
-            Log.e("TAG", "Error exporting CSV file", e);
-        }
+        pendingData = data;
+        createDocument.launch(fileName);
     }
 
-    // Method to check if external storage is writable
-    private boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    // Method to handle permission result
-    public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, you may want to inform the user or take action accordingly
-                Toast.makeText(activity, "Storage permission granted. Please try exporting again.", Toast.LENGTH_SHORT).show();
-            } else {
-                // Permission denied
-                Toast.makeText(activity, "Storage permission is required to export CSV", Toast.LENGTH_SHORT).show();
+    private void onDocumentCreated(Uri uri) {
+        if (uri == null || pendingData == null) {
+            return;
+        }
+        try {
+            ContentResolver resolver = context.getContentResolver();
+            try (OutputStream out = resolver.openOutputStream(uri)) {
+                if (out == null) {
+                    throw new IllegalStateException("no output stream");
+                }
+                try (Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
+                    for (String[] row : pendingData) {
+                        writer.write(toCsvRow(row));
+                        writer.write(LINE_SEPARATOR);
+                    }
+                }
             }
+            toast("CSV file exported successfully");
+        } catch (Exception e) {
+            toast("Error exporting CSV file");
+        } finally {
+            pendingData = null;
         }
+    }
+
+    /** RFC 4180 row: fields are quoted when they contain a separator, quote or newline. */
+    static String toCsvRow(String[] fields) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < fields.length; i++) {
+            if (i > 0) {
+                sb.append(',');
+            }
+            sb.append(escapeCsvField(fields[i]));
+        }
+        return sb.toString();
+    }
+
+    static String escapeCsvField(String value) {
+        String field = value == null ? "" : value;
+        boolean needsQuotes = field.contains(",") || field.contains("\"")
+                || field.contains("\n") || field.contains("\r")
+                || !field.equals(field.trim());
+        if (!needsQuotes) {
+            return field;
+        }
+        return "\"" + field.replace("\"", "\"\"") + "\"";
+    }
+
+    private void toast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

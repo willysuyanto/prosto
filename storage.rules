@@ -1,0 +1,15 @@
+rules_version = '2';
+
+// Firebase Storage rules for Prosto.
+// Only denture photos uploaded by the consultation flow are stored, under
+// images/{docPath}/… and they must actually be images of a sane size.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /images/{allPaths=**} {
+      allow read: if true;
+
+      allow write: if request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

@@ -26,7 +26,6 @@ public class DataKonsultasi {
         this.totalBobotNonPerilaku = totalBobotNonPerilaku;
     }
 
-
     public DataKonsultasi(String namaPasien, String tanggal, boolean hasilPerilaku, boolean hasilNonPerilaku, String status, String userName, String idKonsultasi) {
         this.namaPasien = namaPasien;
         this.tanggal = tanggal;

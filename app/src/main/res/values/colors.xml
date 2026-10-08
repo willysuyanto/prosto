@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_500">#009ed6</color>
-    <color name="purple_700">#0a11ee</color>
+    <!-- Brand -->
+    <color name="brand_blue">#199A8E</color>
+    <color name="brand_blue_dark">#0F7A70</color>
+
+    <!-- Legacy aliases (kept so untouched references stay valid) -->
+    <color name="purple_500">#199A8E</color>
+    <color name="purple_700">#0F7A70</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Material 3 color roles (light), derived from brand #199A8E -->
+    <color name="m3_primary">#199A8E</color>
+    <color name="m3_on_primary">#FFFFFF</color>
+    <color name="m3_primary_container">#9DF2E4</color>
+    <color name="m3_on_primary_container">#00201C</color>
+    <color name="m3_secondary">#4B635F</color>
+    <color name="m3_on_secondary">#FFFFFF</color>
+    <color name="m3_secondary_container">#CDE8E3</color>
+    <color name="m3_on_secondary_container">#07201C</color>
+    <color name="m3_tertiary">#46617A</color>
+    <color name="m3_on_tertiary">#FFFFFF</color>
+    <color name="m3_error">#BA1A1A</color>
+    <color name="m3_on_error">#FFFFFF</color>
+    <color name="m3_background">#F5FAF8</color>
+    <color name="m3_on_background">#171D1B</color>
+    <color name="m3_surface">#F5FAF8</color>
+    <color name="m3_on_surface">#171D1B</color>
+    <color name="m3_surface_variant">#DAE5E2</color>
+    <color name="m3_on_surface_variant">#404846</color>
+    <color name="m3_outline">#707976</color>
+    <color name="m3_outline_variant">#C0C8C5</color>
+    <color name="m3_surface_container">#EFF5F3</color>
+    <color name="m3_surface_container_high">#E9EFED</color>
+
+    <color name="slider_label">#171D1B</color>
+
+    <color name="status_pending">#B26A00</color>
+    <color name="status_confirmed">#0F7A70</color>
+    <color name="status_unfinished">#5B6470</color>
 </resources>

@@ -1,168 +1,133 @@
 package com.ladokgi.apps;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.orhanobut.hawk.Hawk;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.ladokgi.apps.data.ApiCallback;
+import com.ladokgi.apps.data.SessionManager;
+import com.ladokgi.apps.data.UserRepository;
+import com.ladokgi.apps.databinding.ActivityEditProfileBinding;
+import com.ladokgi.apps.util.ProfileSpinners;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    Button btnSimpan;
-    EditText etNama, etPhone, etAddress;
-    Spinner spinner, spTahun, spJenkel;
-
-    RelativeLayout layot1, layot2, layot3;
+    private ActivityEditProfileBinding binding;
+    private UserRepository userRepository;
+    private ListenerRegistration registration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        spinner = (Spinner) findViewById(R.id.spn);
-        spTahun = (Spinner) findViewById(R.id.spn2);
-        spJenkel = (Spinner) findViewById(R.id.spn3);
-        ArrayList<String> years = new ArrayList<>();
-        ArrayList<String> strings = new ArrayList<>();
-        ArrayList<String> jenkels = new ArrayList<>();
+        SessionManager.init(this);
+        userRepository = new UserRepository();
+        ProfileSpinners.bind(binding.spn3, binding.spn, binding.spn2);
 
-        jenkels.add("Jenis Kelamin");
-        jenkels.add("Laki-Laki");
-        jenkels.add("Perempuan");
+        boolean isDokter = SessionManager.isDokter();
+        int spinnerVisibility = isDokter ? View.GONE : View.VISIBLE;
+        binding.layot1.setVisibility(spinnerVisibility);
+        binding.layot2.setVisibility(spinnerVisibility);
+        binding.layot3.setVisibility(spinnerVisibility);
 
-        years.add("Menggunakan gigi tiruan sejak");
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        int currentYear = calendar.get(Calendar.YEAR);
-        Log.d( "calendar: ", String.valueOf(currentYear));
-        for (int i=currentYear; i>=1990; i--){
-            Log.d( "onCreate: ", String.valueOf(i));
-            years.add(String.valueOf(i));
-        }
-        strings.add("Pendidikan Terakhir");
-        strings.add("SMA") ;
-        strings.add("D3");
-        strings.add("S1");
-        strings.add("S2");
-        strings.add("S3");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, strings);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, years);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, jenkels);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spTahun.setAdapter(adapter2);
-        spJenkel.setAdapter(adapter3);
-
-        layot1 = findViewById(R.id.layot1);
-        layot2 = findViewById(R.id.layot2);
-        layot3 = findViewById(R.id.layot3);
-
-        etNama = findViewById(R.id.nama);
-        etPhone = findViewById(R.id.nomor_tlp);
-        etAddress = findViewById(R.id.alamat);
-        btnSimpan = findViewById(R.id.btn_simpan);
-
-        if(Hawk.get("role").equals("dokter")){
-            layot1.setVisibility(View.GONE);
-            layot2.setVisibility(View.GONE);
-            layot3.setVisibility(View.GONE);
-        }
-
-        db.collection("users").document(Hawk.get("username")).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                etNama.setText(value.getString("nama"));
-                etPhone.setText(value.getString("telepon"));
-                etAddress.setText(value.getString("alamat"));
-                spinner.setSelection(adapter.getPosition(value.getString("pendidikan")));
-                spTahun.setSelection(adapter2.getPosition(value.getString("lama-menggunakan")));
-                spJenkel.setSelection(adapter3.getPosition(value.getString("jenis-kelamin")));
+        String username = SessionManager.getUsername();
+        registration = userRepository.observe(username, (value, error) -> {
+            if (value == null || !value.exists()) {
+                return;
+            }
+            binding.nama.setText(value.getString("nama"));
+            binding.nomorTlp.setText(value.getString("telepon"));
+            binding.alamat.setText(value.getString("alamat"));
+            if (!isDokter) {
+                ProfileSpinners.select(binding.spn, value.getString("pendidikan"));
+                ProfileSpinners.select(binding.spn2, value.getString("lama-menggunakan"));
+                ProfileSpinners.select(binding.spn3, value.getString("jenis-kelamin"));
             }
         });
 
-        btnSimpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etNama.getText().toString().equals("")){
-                    Toaster("Nama Lengkap Tidak Boleh Kosong");
-                }else if(etPhone.getText().toString().equals("")){
-                    Toaster("Nomor Telepon Tidak Boleh Kosong");
-                }else if(etAddress.getText().toString().equals("")){
-                    Toaster("Alamat Tidak Boleh Kosong");
-                }else if(Hawk.get("role").equals("pasien") && spJenkel.getSelectedItem().toString().equals("Jenis Kelamin")){
-                    Toaster("Pilih Jenis Kelamin");
-                }else if(Hawk.get("role").equals("pasien") && spinner.getSelectedItem().toString().equals("Pendidikan Terakhir")){
-                    Toaster("Pilih Pendidikan Terakhir");
-                }else if(Hawk.get("role").equals("pasien") && spTahun.getSelectedItem().toString().equals("Menggunakan gigi tiruan sejak")){
-                    Toaster("Pilih Tahun Menggunakan Gigi Tiruan");
-                }else {
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("nama", etNama.getText().toString());
-                    user.put("telepon", etPhone.getText().toString());
-                    user.put("alamat", etAddress.getText().toString());
-                    if(Hawk.get("role").equals("pasien")){
-                        user.put("pendidikan", spinner.getSelectedItem().toString());
-                        user.put("lama-menggunakan", spTahun.getSelectedItem().toString());
-                        user.put("jenis-kelamin", spJenkel.getSelectedItem().toString());
-                    }
+        binding.btnSimpan.setOnClickListener(v -> {
+            String nama = text(binding.nama);
+            String telepon = text(binding.nomorTlp);
+            String alamat = text(binding.alamat);
 
-                    db.collection("users").document(Hawk.get("username")).update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toaster("Berhasil Ubah Profil");
-                                new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                                        new Runnable() {
-                                            public void run() {
-                                               finish();
-                                            }
-                                        },
-                                        1000);
-                            }
-                        }
-                    });
+            if (nama.isEmpty()) {
+                Toaster("Nama Lengkap Tidak Boleh Kosong");
+                return;
+            }
+            if (telepon.isEmpty()) {
+                Toaster("Nomor Telepon Tidak Boleh Kosong");
+                return;
+            }
+            if (alamat.isEmpty()) {
+                Toaster("Alamat Tidak Boleh Kosong");
+                return;
+            }
+            if (!isDokter) {
+                if (ProfileSpinners.isPlaceholder(binding.spn3)) {
+                    Toaster("Pilih Jenis Kelamin");
+                    return;
+                }
+                if (ProfileSpinners.isPlaceholder(binding.spn)) {
+                    Toaster("Pilih Pendidikan Terakhir");
+                    return;
+                }
+                if (ProfileSpinners.isPlaceholder(binding.spn2)) {
+                    Toaster("Pilih Tahun Menggunakan Gigi Tiruan");
+                    return;
                 }
             }
 
+            Map<String, Object> user = new HashMap<>();
+            user.put("nama", nama);
+            user.put("telepon", telepon);
+            user.put("alamat", alamat);
+            if (!isDokter) {
+                user.put("pendidikan", binding.spn.getText().toString());
+                user.put("lama-menggunakan", binding.spn2.getText().toString());
+                user.put("jenis-kelamin", binding.spn3.getText().toString());
+            }
+
+            binding.btnSimpan.setEnabled(false);
+            userRepository.updateProfile(username, user, new ApiCallback.SuccessError() {
+                @Override
+                public void onSuccess() {
+                    Toaster("Berhasil Ubah Profil");
+                    new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> finish(), 800);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    binding.btnSimpan.setEnabled(true);
+                    Toaster("Gagal mengubah profil");
+                }
+            });
         });
-
-
     }
 
+    @Override
+    protected void onDestroy() {
+        if (registration != null) {
+            registration.remove();
+        }
+        super.onDestroy();
+    }
 
-    void Toaster(String text){
-        Toast.makeText(getApplicationContext(),text, Toast.LENGTH_SHORT).show();
+    private String text(android.widget.EditText editText) {
+        return editText.getText() != null ? editText.getText().toString().trim() : "";
+    }
+
+    private void Toaster(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 }

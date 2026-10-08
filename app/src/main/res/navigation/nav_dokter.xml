@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_dokter"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.ladokgi.apps.homepage.DashboardDokterFragment"
+        android:label="@string/app_name" />
+
+    <fragment
+        android:id="@+id/nav_akun"
+        android:name="com.ladokgi.apps.AkunFragment"
+        android:label="@string/account_title" />
+</navigation>

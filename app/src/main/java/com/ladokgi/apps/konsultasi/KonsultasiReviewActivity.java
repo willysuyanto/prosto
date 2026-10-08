@@ -1,127 +1,85 @@
 package com.ladokgi.apps.konsultasi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.ladokgi.apps.R;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import com.ladokgi.apps.data.ApiCallback;
+import com.ladokgi.apps.data.ConsultationRepository;
+import com.ladokgi.apps.databinding.ActivityKonsultasiReviewBinding;
 
 public class KonsultasiReviewActivity extends AppCompatActivity {
 
-    TextView bobotP, bobotNp, kesimpulan;
-    ImageView imageView;
-    Button btnConfirm;
+    private ActivityKonsultasiReviewBinding binding;
+    private final ConsultationRepository repository = new ConsultationRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_konsultasi_review);
-        bobotP = findViewById(R.id.bobot_p);
-        bobotNp = findViewById(R.id.bobot_np);
-        kesimpulan = findViewById(R.id.kesimpulan);
-        btnConfirm = findViewById(R.id.btn_cofirm);
-        imageView = findViewById(R.id.gambar_gigi);
+        binding = ActivityKonsultasiReviewBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         Bundle bundle = getIntent().getExtras();
-        Log.d("onCreate: ", bundle.getString("idKonsultasi"));
-        Log.d("onCreate: ", bundle.getString("username"));
+        String idKonsultasi = bundle != null ? bundle.getString("idKonsultasi") : null;
+        String userName = bundle != null ? bundle.getString("username") : null;
+        if (idKonsultasi == null || userName == null) {
+            finish();
+            return;
+        }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        String idKonsultasi = bundle.getString("idKonsultasi");
-        String userName = bundle.getString("username");
-        db.collection("users").document(userName).collection("konsultasi").document(idKonsultasi).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    StorageReference imageref = storage.getReference();
-                    //Log.d( "onComplete: ", task.getResult().getString("gambar_gigi"));
-                    if(task.getResult().getString("gambar_gigi")!=null){
-                        imageref.child(task.getResult().getString("gambar_gigi"))
-                                .getDownloadUrl()
-                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                Glide.with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .into(imageView);
-                            }
-                        });
-                    }
-
-                    String sBobotP = task.getResult().get("perilaku.total-bobot").toString();
-                    String sBobotNp = task.getResult().get("non-perilaku.total-bobot").toString();
-                    boolean hasilP = task.getResult().getBoolean("perilaku.hasil");
-                    boolean hasilNp = task.getResult().getBoolean("non-perilaku.hasil");
-                    if(hasilP){
-                        sBobotP+=" (+)";
-                    } else {
-                        sBobotP+=" (-)";
-                    }
-                    if(hasilNp){
-                        sBobotNp+=" (+)";
-                    } else {
-                        sBobotNp+=" (-)";
-                    }
-
-                    bobotP.setText(sBobotP);
-                    bobotNp.setText(sBobotNp);
-                    kesimpulan.setText(calculateHasil(hasilP,hasilNp));
-                }
+        repository.getConsultation(userName, idKonsultasi).addOnCompleteListener(task -> {
+            if (!task.isSuccessful() || task.getResult() == null || !task.getResult().exists()) {
+                return;
             }
+            com.google.firebase.firestore.DocumentSnapshot doc = task.getResult();
+            String imagePath = doc.getString("gambar_gigi");
+            if (imagePath != null) {
+                FirebaseStorage.getInstance().getReference().child(imagePath)
+                        .getDownloadUrl()
+                        .addOnSuccessListener(uri -> Glide.with(getApplicationContext())
+                                .load(uri.toString())
+                                .into(binding.gambarGigi));
+            }
+
+            Object totalP = doc.get("perilaku.total-bobot");
+            Object totalNp = doc.get("non-perilaku.total-bobot");
+            boolean hasilP = Boolean.TRUE.equals(doc.getBoolean("perilaku.hasil"));
+            boolean hasilNp = Boolean.TRUE.equals(doc.getBoolean("non-perilaku.hasil"));
+
+            binding.bobotP.setText((totalP != null ? totalP : "-") + (hasilP ? " (+)" : " (-)"));
+            binding.bobotNp.setText((totalNp != null ? totalNp : "-") + (hasilNp ? " (+)" : " (-)"));
+            binding.kesimpulan.setText(calculateHasil(hasilP, hasilNp));
         });
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.collection("users").document(userName).collection("konsultasi").document(idKonsultasi).update("status","confirmed").addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),"Konsultasi dikonfirmasi", Toast.LENGTH_SHORT).show();
-                            String timeStamp = new SimpleDateFormat("dd MMMM yyyy HH.mm").format(new Date());
-                            Map<String, Object> data = new HashMap<>();
-                            data.put("title", "Pemberitahuan");
-                            data.put("message", "Konsultasi anda telah selesai ditinjau oleh Dokter. Silahkan cek hasil konsultasi anda pada Dashboard aplikasi.");
-                            data.put("date", timeStamp);
-                            db.collection("users").document(userName).collection("notifikasi").document(UUID.randomUUID().toString()).set(data);
-                            finish();
-                        }
-                    }
-                });
-            }
+
+        binding.btnCofirm.setOnClickListener(v -> {
+            binding.btnCofirm.setEnabled(false);
+            repository.confirmConsultation(userName, idKonsultasi, new ApiCallback.SuccessError() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(getApplicationContext(), "Konsultasi dikonfirmasi", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    binding.btnCofirm.setEnabled(true);
+                    Toast.makeText(getApplicationContext(), "Gagal mengonfirmasi konsultasi", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
-    private String calculateHasil(boolean h1, boolean h2){
-        if(h1 && h2){
+
+    private String calculateHasil(boolean h1, boolean h2) {
+        if (h1 && h2) {
             return "Tidak disarankan berobat";
-        }else if(h1 || h2){
+        } else if (h1 || h2) {
             return "Disarankan berobat";
-        }else {
-            return "Harus berobat";
         }
+        return "Harus berobat";
     }
 }

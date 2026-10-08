@@ -16,7 +16,7 @@
         android:text="Upload Gambar Gigi Tiruan (Optional)"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:textColor="@color/black"/>
+        android:textColor="?attr/colorOnSurface"/>
 
     <ImageView
         android:id="@+id/images"
@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/placeholder"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/galery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_marginTop="16dp"
         android:text="Ambil Dari Galeri"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/camera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:layout_marginTop="16dp"
         android:text="Ambil Dari Kamera"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textAlignment="center"
         android:text="Lewati"/>
 

@@ -1,10 +1,141 @@
 <resources>
     <string name="app_name">Prosto</string>
-    <string name="title_activity_dokter">MainActivity</string>
-    <string name="title_activity_pasien">MainActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_dokter">Prosto</string>
+    <string name="title_activity_pasien">Prosto</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="spinnerPlaceholder">Pendidikan Terakhir</string>
+
+    <!-- Common -->
+    <string name="action_save">Simpan</string>
+    <string name="action_cancel">Batal</string>
+    <string name="action_confirm">Ya</string>
+    <string name="action_confirm_title">Konfirmasi</string>
+    <string name="action_no">Tidak</string>
+    <string name="logo_wordmark">PROSTO MOBILE</string>
+    <string name="hospital_name">RS LADOKGI TNI AL R.E MARTADINATA</string>
+
+    <!-- Login -->
+    <string name="login_title">LOGIN</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="action_login">Masuk</string>
+    <string name="login_no_account">Belum Punya Akun?</string>
+    <string name="action_register">Daftar</string>
+    <string name="err_username_empty">Username Tidak Boleh Kosong</string>
+    <string name="err_password_empty">Password Tidak Boleh Kosong</string>
+    <string name="err_password_wrong">Password Salah</string>
+    <string name="err_user_not_found">Username Tidak Ditemukan</string>
+    <string name="msg_login_success">Login Berhasil</string>
+    <string name="msg_user_exists">Username Sudah Digunakan</string>
+    <string name="msg_register_success">Berhasil Buat Akun</string>
+
+    <!-- Registration / profile forms -->
+    <string name="form_register_title">FORM REGISTRASI PASIEN</string>
+    <string name="form_add_patient_title">FORM TAMBAH DATA PASIEN</string>
+    <string name="form_edit_patient_title">FORM EDIT DATA PASIEN</string>
+    <string name="form_reset_password_title">FORM RESET PASSWORD</string>
+    <string name="form_edit_profile_title">FORM EDIT PROFIL</string>
+    <string name="hint_full_name">Nama Lengkap</string>
+    <string name="hint_phone">Nomor Telepon</string>
+    <string name="hint_address">Alamat</string>
+    <string name="hint_confirm_password">Konfirmasi Password</string>
+
+    <!-- Validation -->
+    <string name="err_name_empty">Nama Lengkap Tidak Boleh Kosong</string>
+    <string name="err_phone_empty">Nomor Telepon Tidak Boleh Kosong</string>
+    <string name="err_address_empty">Alamat Tidak Boleh Kosong</string>
+    <string name="err_pick_gender">Pilih Jenis Kelamin</string>
+    <string name="err_pick_education">Pilih Pendidikan Terakhir</string>
+    <string name="err_pick_year">Pilih Tahun Menggunakan Gigi Tiruan</string>
+    <string name="err_password_mismatch">Password dan Password Konfirmasi Tidak Sama</string>
+    <string name="msg_password_updated">Berhasil Ubah Password</string>
+    <string name="msg_profile_updated">Berhasil Ubah Profil</string>
+    <string name="msg_patient_saved">Berhasil Buat Data Pasien</string>
+    <string name="msg_patient_updated">Berhasil Update Data Pasien</string>
+    <string name="msg_patient_deleted">Berhasil hapus data pasien</string>
+
+    <!-- Dashboard patient -->
+    <string name="dashboard_patient_greet">Halo, Selamat datang di dasboard pasien\nPROSTO MOBILE</string>
+    <string name="dashboard_doctor_greet">Halo Dok, Selamat datang di dasboard dokter PROSTO MOBILE</string>
+    <string name="section_my_consultation">Konsultasi Saya</string>
+    <string name="empty_consultation">Belum ada data Konsultasi</string>
+    <string name="action_consult_now">Konsultasi Sekarang</string>
+    <string name="menu_consultation_data">Data Konsultasi</string>
+    <string name="menu_consultation_data_desc">Daftar semua konsultasi pasien</string>
+    <string name="menu_patient_data">Data Pasien</string>
+    <string name="menu_patient_data_desc">Menambahkan, edit, dan hapus data pasien</string>
+
+    <!-- Account -->
+    <string name="account_title">AKUN SAYA</string>
+    <string name="label_name">Nama</string>
+    <string name="label_address">Alamat</string>
+    <string name="label_phone">Nomor Telepon</string>
+    <string name="label_gender">Jenis Kelamin</string>
+    <string name="label_education">Pendidikan Terakhir</string>
+    <string name="label_usage_duration">Lama Menggunakan Gigi Tiruan</string>
+    <string name="action_edit_account">Edit Data Akun</string>
+    <string name="action_logout">Logout</string>
+    <string name="unit_years">Tahun</string>
+
+    <!-- Consultation entry -->
+    <string name="tab_pending_review">Belum direview</string>
+    <string name="tab_done_review">Sudah direview</string>
+    <string name="consultation_intro">Konsultasi ini terbagi atas 2 aspek yaitu Aspek Perilaku dan Aspek non Perilaku</string>
+    <string name="consultation_outro">Setelah konsultasi, hasil konsultasi dapat dilihat pada menu Dashboard</string>
+    <string name="action_start_consultation">Mulai Konsultasi</string>
+    <string name="aspect_behavior_title">Aspek Perilaku</string>
+    <string name="aspect_non_behavior_title">Aspek Non Perilaku</string>
+    <string name="action_submit_answers">Kirim Jawaban</string>
+    <string name="format_question">Pertanyaan %1$d</string>
+    <string name="question_number">Pertanyaan %1$d</string>
+
+    <!-- Consultation status / results -->
+    <string name="status_unfinished">Proses konsultasi sedang berlangsung</string>
+    <string name="status_pending">Sedang direview oleh dokter</string>
+    <string name="status_confirmed">Hasil telah diverifikasi oleh dokter</string>
+    <string name="result_no_treatment">Tidak disarankan berobat</string>
+    <string name="result_consider_treatment">Disarankan berobat</string>
+    <string name="result_treatment_needed">Harus berobat</string>
+
+    <!-- Notifications -->
+    <string name="notification_title">Notifikasi</string>
+    <string name="empty_notification">Belum ada notifikasi</string>
+
+    <!-- Upload -->
+    <string name="upload_title">Upload Gambar Gigi</string>
+    <string name="upload_camera">Kamera</string>
+    <string name="upload_gallery">Galeri</string>
+    <string name="upload_submit">Upload</string>
+    <string name="upload_skip">Lewati</string>
+    <string name="upload_in_progress">Sedang Upload Data</string>
+    <string name="upload_success">Berhasil Upload Gambar</string>
+
+    <!-- CSV / files -->
+    <string name="csv_export_success">Berkas CSV berhasil dibuat</string>
+    <string name="csv_export_error">Gagal mengekspor berkas CSV</string>
+    <string name="csv_export_hint">Pilih lokasi penyimpanan berkas CSV</string>
+
+    <!-- Dialogs -->
+    <string name="exit_confirm_message">Keluar dari aplikasi ?</string>
+    <string name="delete_patient_confirm">Hapus data pasien %1$s?</string>
+    <string name="action_delete">Hapus</string>
+
+    <!-- Recommendations -->
+    <string name="recommendation_positive">Sering</string>
+    <string name="recommendation_negative">Tidak Pernah</string>
+
+    <string name="no_data">Belum ada data konsultasi</string>
+    <string name="download_data_konsultasi_csv">Download data konsultasi (CSV)</string>
+
+    <string-array name="data_pendidikan">
+        <item>SMA</item>
+        <item>D3</item>
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+    </string-array>
+
+    <!-- Questionnaire: behavior aspect -->
     <string name="perilaku_pertanyaan1">Merendam gigi tiruan dalam wadah berisi air dalam suhu ruangan apabila tidak digunakan?</string>
     <string name="perilaku_pertanyaan2">Membersihkan gigi tiruan setiap hari dengan air mengalir dan menyikatnya dengan sikat gigi?</string>
     <string name="perilaku_pertanyaan3">Banyak orang yang saya kenal menganjurkan saya merendam gigi tiruan dan direndam dialam wadah berisi air dengan suhu ruangan apabila tidak digunakan</string>
@@ -23,6 +154,8 @@
     <string name="perilaku_pertanyaan16">Saya berniat membersihkan gigi tiruan dibawah air mengalir dan menyikatnya sendiri.</string>
     <string name="perilaku_pertanyaan17">Dalam tiga bulan terakhir ini saya merendam gigi tiruan saya dalam wadah berisi air bersuhu ruangan bila sedang tidak digunakan.</string>
     <string name="perilaku_pertanyaan18">Dalam tiga bulan terakhir ini saya membersihkan gigi tiruan dibawah air mengalir dan menyikatnya sendiri.</string>
+
+    <!-- Questionnaire: non-behavior aspect -->
     <string name="non_perilaku_pertanyaan1">Apakah Saudara/Saudari minum air mineral untuk kebutuhan minum sehari-hari?</string>
     <string name="non_perilaku_pertanyaan2">Apakah Saudara/Saudari minum air kemasan?</string>
     <string name="non_perilaku_pertanyaan3">Apakah Saudara/Saudari merokok?</string>
@@ -33,13 +166,25 @@
     <string name="non_perilaku_pertanyaan8">Apakah Saudara/Saudari tidak mempunyai gigi berlubang/karies?</string>
     <string name="non_perilaku_pertanyaan9">Apakah Saudara/Saudari tidak mempunyai plak gigi?</string>
     <string name="non_perilaku_pertanyaan10">Apakah saudara/Saudari tidak mempunyai karang gigi?</string>
-    <string name="no_data">Belum ada data konsultasi</string>
-    <string name="download_data_konsultasi_csv">Download data konsultasi (CSV)</string>
-    <string-array name="data_pendidikan">
-        <item>SMA</item>
-        <item>D3</item>
-        <item>S1</item>
-        <item>S2</item>
-        <item>S3</item>
-    </string-array>
+
+    <!-- Slider labels -->
+    <string name="label_harmful">Merugikan</string>
+    <string name="label_beneficial">Menguntungkan</string>
+    <string name="label_troublesome">Merepotkan</string>
+    <string name="label_easy">Memudahkan</string>
+    <string name="label_boring">Membosankan</string>
+    <string name="label_fun">Menyenangkan</string>
+    <string name="label_bad">Buruk</string>
+    <string name="label_good">Baik</string>
+    <string name="label_wasteful">Membuang Waktu</string>
+    <string name="label_useful">Bermanfaat</string>
+    <string name="label_disagree">Tidak Setuju</string>
+    <string name="label_agree">Setuju</string>
+    <string name="label_many">Banyak</string>
+    <string name="label_none">Tidak Ada</string>
+    <!-- Data Pasien -->
+    <string name="search_patient_hint">Cari nama, telepon, atau alamat</string>
+    <string name="search_patient_empty">Tidak ada data pasien yang cocok</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_reset_password">Reset Password</string>
 </resources>

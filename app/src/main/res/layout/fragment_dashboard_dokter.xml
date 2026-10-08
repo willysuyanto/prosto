@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
+    android:background="?attr/colorSurface"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".homepage.DashboardDokterFragment">
 
@@ -26,7 +26,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="18dp"/>
         <TextView
@@ -36,7 +36,7 @@
             android:text="RS LADOKGI TNI AL R.E MARTADINATA"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintTop_toBottomOf="@id/appname" />
 
         <LinearLayout
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:paddingHorizontal="16dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginTop="16dp"
             android:textAlignment="center"
             android:text="Halo Dok, Selamat datang di dasboard dokter PROSTO MOBILE"
@@ -93,7 +93,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_baseline_medical_services_24"
-                    app:tint="@color/purple_500"
+                    app:tint="?attr/colorPrimary"
                     />
                 <LinearLayout
                     android:orientation="vertical"
@@ -106,11 +106,11 @@
                         android:text="Data Konsultasi"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/purple_500"/>
+                        android:textColor="?attr/colorPrimary"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/colorOnSurface"
                         android:text="Daftar semua konsultasi pasien"
                         />
                 </LinearLayout>
@@ -138,7 +138,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_baseline_group_24"
-                    app:tint="@color/purple_500"
+                    app:tint="?attr/colorPrimary"
                     />
                 <LinearLayout
                     android:orientation="vertical"
@@ -151,11 +151,11 @@
                         android:text="Data Pasien"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/purple_500"/>
+                        android:textColor="?attr/colorPrimary"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/colorOnSurface"
                         android:text="Menambahkan, edit, dan hapus data pasien"
                         />
                 </LinearLayout>

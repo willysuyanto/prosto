@@ -33,7 +33,6 @@ public class KonsultasiAdapter extends RecyclerView.Adapter<KonsultasiAdapter.Vi
         return new ViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Konsultasi item = list.get(position);
